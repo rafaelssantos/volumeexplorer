@@ -4,7 +4,7 @@ A volume visualization tool for multidimensional transfer function design in Dir
 
 
 ## Description
-VEx is an experimental tool with simplify volume interaction. This tool implements [Santos (2018)]([https://pages.github.com/](https://repositorio.unesp.br/items/5d693752-868f-4670-aa80-5e2180469e3b) approach that combines [FastMap](https://dl.acm.org/doi/pdf/10.1145/223784.223812), [DBSCAN](https://cdn.aaai.org/KDD/1996/KDD96-037.pdf), and [Sparse Spatial Selection](https://lbd.udc.es/Repository/Publications/Drafts/SpaSelofSpa.pdf) algorithms for a comprehensive and a low computational cost volume feature exploration space.
+VEx is an experimental tool with simplify volume interaction. This tool implements [Santos (2018)](https://repositorio.unesp.br/items/5d693752-868f-4670-aa80-5e2180469e3b) approach that combines [FastMap](https://dl.acm.org/doi/pdf/10.1145/223784.223812), [DBSCAN](https://cdn.aaai.org/KDD/1996/KDD96-037.pdf), and [Sparse Spatial Selection](https://lbd.udc.es/Repository/Publications/Drafts/SpaSelofSpa.pdf) algorithms for a comprehensive and a low computational cost volume feature exploration space.
 
 
 ## Algorithms
