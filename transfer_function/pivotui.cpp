@@ -1,0 +1,169 @@
+#include "pivotui.h"
+
+#include <cmath>
+#include <QBrush>
+#include <QPen>
+#include "settings/tfsettings.h"
+
+using namespace settings;
+using namespace transfer_function;
+
+
+
+PivotUI::PivotUI(int index, float2 basePos) : QObject (), QGraphicsEllipseItem(){
+    m_index = index;
+    m_basePos = basePos;
+
+    m_color = {1, 1, 1, 1};
+
+    m_brush = QBrush(QColor(static_cast<int>(m_color.x * 255), static_cast<int>(m_color.y * 255), static_cast<int>(m_color.z * 255),  static_cast<int>(m_color.w * 255)));
+    m_pen = QPen(m_brush.color().darker());
+
+    m_selectionSilenced = false;
+
+    initComponents();
+}
+
+
+
+
+void PivotUI::setIndex(int index) {
+    m_index = index;
+}
+
+
+
+
+
+int PivotUI::index() const {
+    return m_index;
+}
+
+
+
+
+PivotUI::~PivotUI(){
+}
+
+
+
+
+
+
+void PivotUI::initComponents(){
+    setFlag(QGraphicsEllipseItem::ItemIsMovable, false);
+    setFlag(QGraphicsEllipseItem::ItemIsFocusable, true);
+    setFlag(QGraphicsEllipseItem::ItemIsSelectable, true);
+
+    m_pen.setCapStyle(Qt::PenCapStyle::SquareCap);
+    m_pen.setWidthF(2);
+
+    setBrush(m_brush);
+    setPen(m_pen);
+}
+
+
+
+
+
+QVariant PivotUI::itemChange(QGraphicsItem::GraphicsItemChange change, const QVariant &value){
+    if(change == QGraphicsItem::ItemSelectedChange && !m_selectionSilenced){
+		if(isSelected()){
+            emit signalSelect(false, m_index);
+        }
+        else{
+            emit signalSelect(true, m_index);
+        }
+    }
+    return QGraphicsItem::itemChange(change, value);
+}
+
+
+
+void PivotUI::setColor(float red, float green, float blue, float opacity) {
+    float4 color = {red, green, blue, opacity};
+    setColor(color);
+}
+
+
+
+void PivotUI::setColor(const float4& color){
+    m_color = color;
+
+    m_brush.setColor(QColor(static_cast<int>(color.x * 255), static_cast<int>(color.y * 255), static_cast<int>(color.z * 255),  static_cast<int>(color.w * 255)));
+    setBrush(m_brush);
+
+    QColor borderColor = m_brush.color().darker();
+	borderColor.setAlphaF(fmax(color.w, 0.25f));
+    m_pen.setColor(borderColor);
+    setPen(m_pen);
+    update();
+}
+
+
+
+void PivotUI::setUnselectedOpacity(float opacity) {
+    m_brush.setColor(QColor(m_brush.color().red(), m_brush.color().green(), m_brush.color().blue(), static_cast<int>(opacity * 255)));
+    setBrush(m_brush);
+
+    QColor borderColor = m_brush.color().darker();
+	borderColor.setAlphaF(fmax(m_brush.color().alphaF(), 0.25f));
+    m_pen.setColor(borderColor);
+    setPen(m_pen);
+    update();
+}
+
+
+
+const float4& PivotUI::color() const {
+    return m_color;
+}
+
+
+
+
+void PivotUI::setBasePos(const float2& basePos) {
+    m_basePos = basePos;
+}
+
+
+
+const float2& PivotUI::basePos() const {
+    return m_basePos;
+}
+
+
+
+
+void PivotUI::setSelected(bool selected, bool silenced) {
+    m_selectionSilenced = silenced;
+
+    QGraphicsEllipseItem::setSelected(selected);
+
+    m_selectionSilenced = false;
+}
+
+
+
+void PivotUI::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget){
+    QGraphicsEllipseItem::paint(painter, option, widget);
+
+    if(TFSettings::instance().pivotLabelEnabled()){
+        painter->drawText(rect().bottomRight(), QString::fromStdString(std::to_string(m_index)));
+    }
+}
+
+
+
+
+void PivotUI::setBorderWidth(float width) {
+    m_pen.setWidthF(width);
+    setPen(m_pen);
+    update();
+}
+
+
+
+float PivotUI::borderWidth() const {
+    return static_cast<float>(m_pen.widthF());
+}

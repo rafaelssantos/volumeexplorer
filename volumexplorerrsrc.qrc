@@ -1,0 +1,19 @@
+<RCC>
+    <qresource prefix="/">
+        <file>img/rotate_left.png</file>
+        <file>img/rotate_right.png</file>
+        <file>img/refresh.png</file>
+        <file>img/zoom_in.png</file>
+        <file>img/zoom_out.png</file>
+        <file>img/group.png</file>
+        <file>img/ungroup.png</file>
+        <file>img/unselect_all.png</file>
+        <file>img/fill.png</file>
+        <file>img/vex_logo.png</file>
+        <file>img/left.png</file>
+        <file>img/palette.png</file>
+        <file>img/reload.png</file>
+        <file>img/right.png</file>
+        <file>img/fast.png</file>
+    </qresource>
+</RCC>

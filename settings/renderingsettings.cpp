@@ -1,0 +1,535 @@
+#include "renderingsettings.h"
+
+#include <QSettings>
+
+
+
+using namespace rendering;
+using namespace transfer_function;
+using namespace settings;
+
+
+
+
+
+RenderingSettings::RenderingSettings() {
+    m_HQSpecs.step = m_specs.step = 0;
+    m_HQSpecs.maxOpacity = m_specs.maxOpacity = 1.0;
+    m_HQSpecs.zoomIncrement = m_specs.zoomIncrement = 0.025f;
+    m_HQSpecs.maxSteps = m_specs.maxSteps = 1000;
+
+    m_HQBlockDim = m_blockDim = {192, 1, 1};
+    m_HQInterpolation = m_interpolation = Interpolation::NEAREST;
+
+    m_HQIllumination.ambientPower = m_illumination.ambientPower = 0.1f;
+    m_HQIllumination.diffusePower = m_illumination.diffusePower = 0.5;
+    m_HQIllumination.specularPower = m_illumination.specularPower = 0.4f;
+    m_HQIllumination.shininess = m_illumination.shininess = 32;
+    m_HQIllumination.enabled = m_illumination.enabled = false;
+
+    m_HQRotationDegree = m_rotationDegree = 1.0;
+
+    m_HQEnabled = false;
+
+    m_HQDevSyncronize = m_devSyncronize = false;
+}
+
+
+
+
+
+RenderingSettings::~RenderingSettings() {
+}
+
+
+
+
+
+RenderingSettings& RenderingSettings::instance() {
+    static RenderingSettings instance;
+
+    return instance;
+}
+
+
+
+
+
+void RenderingSettings::load() {
+    QSettings settings("volumeExplorer", "Rendering");
+
+    m_specs.step = settings.value("step", 1.0).toFloat();
+    m_specs.maxOpacity = settings.value("maxOpacity", 1.0).toFloat();
+    m_specs.zoomIncrement = settings.value("zoomIncrement", 0.025f).toFloat();
+    m_specs.maxSteps = settings.value("maxNumberOfSteps", 1000).toUInt();
+
+    m_blockDim.x = settings.value("blockDimX", 192).toUInt();
+    m_blockDim.y = settings.value("blockDimY", 1).toUInt();
+    m_blockDim.z = settings.value("blockDimZ", 1).toUInt();
+    m_devSyncronize = settings.value("devSyncronize", false).toBool();
+
+    m_illumination.enabled = settings.value("illuminationEnabled", false).toBool();
+    m_illumination.ambientPower = settings.value("ambientPower", 0.1f).toFloat();
+    m_illumination.diffusePower = settings.value("diffusePower", 0.5f).toFloat();
+    m_illumination.specularPower = settings.value("specularPower", 0.4f).toFloat();
+    m_illumination.shininess = settings.value("shininess", 32).toInt();
+
+    m_interpolation = static_cast<Interpolation>(settings.value("illumination", 0).toInt());
+
+    m_rotationDegree = settings.value("rotationDegree", 1.0).toFloat();
+
+
+    m_HQSpecs.step = settings.value("HQStep", 1.0).toFloat();
+    m_HQSpecs.maxOpacity = settings.value("HQMaxOpacity", 1.0).toFloat();
+    m_HQSpecs.zoomIncrement = settings.value("HQZoomIncrement", 0.025f).toFloat();
+    m_HQSpecs.maxSteps = settings.value("HQMaxNumberOfSteps", 1000).toUInt();
+
+    m_HQBlockDim.x = settings.value("HQBlockDimX", 192).toUInt();
+    m_HQBlockDim.y = settings.value("HQBlockDimY", 1).toUInt();
+    m_HQBlockDim.z = settings.value("HQBlockDimZ", 1).toUInt();
+    m_HQDevSyncronize = settings.value("HQDevSyncronize", false).toBool();
+
+
+    m_HQIllumination.enabled = settings.value("HQIlluminationEnabled", false).toBool();
+    m_HQIllumination.ambientPower = settings.value("HQambientPower", 0.1f).toFloat();
+    m_HQIllumination.diffusePower = settings.value("HQdiffusePower", 0.5f).toFloat();
+    m_HQIllumination.specularPower = settings.value("HQspecularPower", 0.4f).toFloat();
+    m_HQIllumination.shininess = settings.value("HQshininess", 32).toInt();
+
+    m_HQInterpolation = static_cast<Interpolation>(settings.value("HQillumination", 0).toInt());
+
+    m_HQRotationDegree = settings.value("HQRotationDegree", 1.0).toFloat();
+
+    settings.sync();
+}
+
+
+
+
+
+void RenderingSettings::save() {
+    QSettings settings("volumeExplorer", "Rendering");
+
+    settings.setValue("step", m_specs.step);
+    settings.setValue("maxOpacity", m_specs.maxOpacity);
+    settings.setValue("zoomIncrement", m_specs.zoomIncrement);
+    settings.setValue("maxNumberOfSteps", m_specs.maxSteps);
+
+    settings.setValue("blockDimX", m_blockDim.x);
+    settings.setValue("blockDimY", m_blockDim.y);
+    settings.setValue("blockDimZ", m_blockDim.z);
+    settings.setValue("devSyncronize", m_devSyncronize);
+
+
+    settings.setValue("illuminationEnabled", m_illumination.enabled);
+    settings.setValue("ambientPower", m_illumination.ambientPower);
+    settings.setValue("diffusePower", m_illumination.diffusePower);
+    settings.setValue("specularPower", m_illumination.specularPower);
+    settings.setValue("shininess", m_illumination.shininess);
+    settings.setValue("illumination", m_interpolation);
+
+    settings.setValue("rotationDegree", m_rotationDegree);
+
+
+    settings.setValue("HQStep", m_HQSpecs.step);
+    settings.setValue("HQMaxOpacity", m_HQSpecs.maxOpacity);
+    settings.setValue("HQZoomIncrement", m_HQSpecs.zoomIncrement);
+    settings.setValue("HQMaxNumberOfSteps", m_HQSpecs.maxSteps);
+
+    settings.setValue("HQBlockDimX", m_HQBlockDim.x);
+    settings.setValue("HQBlockDimY", m_HQBlockDim.y);
+    settings.setValue("HQBlockDimZ", m_HQBlockDim.z);
+    settings.setValue("HQDevSyncronize", m_HQDevSyncronize);
+
+
+    settings.setValue("HQIlluminationEnabled", m_HQIllumination.enabled);
+    settings.setValue("HQambientPower", m_HQIllumination.ambientPower);
+    settings.setValue("HQdiffusePower", m_HQIllumination.diffusePower);
+    settings.setValue("HQspecularPower", m_HQIllumination.specularPower);
+    settings.setValue("HQshininess", m_HQIllumination.shininess);
+    settings.setValue("HQillumination", m_HQInterpolation);
+
+    settings.setValue("HQRotationDegree", m_HQRotationDegree);
+
+    settings.sync();
+}
+
+
+
+
+
+float RenderingSettings::rotationDegree() const {
+    if(m_HQEnabled){
+        return m_HQRotationDegree;
+    }
+    else{
+        return m_rotationDegree;
+    }
+}
+
+
+
+
+
+void RenderingSettings::setRotationDegree(float degree) {
+    if(m_HQEnabled){
+        m_HQRotationDegree = degree;
+    }
+    else{
+        m_rotationDegree = degree;
+    }
+}
+
+
+
+
+
+float RenderingSettings::step() const {
+    if(m_HQEnabled){
+        return m_HQSpecs.step;
+    }
+    else{
+        return m_specs.step;
+    }
+}
+
+
+
+
+
+void RenderingSettings::setStep(float step) {
+    if(m_HQEnabled){
+        m_HQSpecs.step = step;
+    }
+    else{
+        m_specs.step = step;
+    }
+}
+
+
+
+
+
+unsigned RenderingSettings::maxNumberOfSteps() const {
+    if(m_HQEnabled){
+        return m_HQSpecs.maxSteps;
+    }
+    else {
+        return m_specs.maxSteps;
+    }
+}
+
+
+
+void RenderingSettings::setMaxNumberOfSteps(unsigned numberOfSteps) {
+    if(m_HQEnabled){
+        m_HQSpecs.maxSteps = numberOfSteps;
+    }
+    else{
+        m_specs.maxSteps = numberOfSteps;
+    }
+}
+
+
+
+
+
+float RenderingSettings::maxOpacity() const {
+    if(m_HQEnabled){
+        return m_HQSpecs.maxOpacity;
+    }
+    else{
+        return m_specs.maxOpacity;
+    }
+}
+
+
+
+
+
+void RenderingSettings::setMaxOpacity(float max_opacity) {
+    if(m_HQEnabled){
+        m_HQSpecs.maxOpacity = max_opacity;
+    }
+    else{
+        m_specs.maxOpacity = max_opacity;
+    }
+}
+
+
+
+
+
+const dim3 &RenderingSettings::blockDim() const {
+    if(m_HQEnabled){
+        return m_HQBlockDim;
+    }
+    else{
+        return m_blockDim;
+    }
+}
+
+
+
+
+
+void RenderingSettings::setBlockDim(unsigned x, unsigned y, unsigned z) {
+    if(m_HQEnabled){
+        m_HQBlockDim.x = x;
+        m_HQBlockDim.y = y;
+        m_HQBlockDim.z = z;
+    }
+    else{
+        m_blockDim.x = x;
+        m_blockDim.y = y;
+        m_blockDim.z = z;
+    }
+}
+
+
+
+
+
+void RenderingSettings::setBlockDim(const dim3 &blockDim) {
+    if(m_HQEnabled){
+        m_HQBlockDim = blockDim;
+    }
+    else{
+        m_blockDim  = blockDim;
+    }
+}
+
+
+
+
+
+Interpolation RenderingSettings::interpolation() const {
+    if(m_HQEnabled){
+        return m_HQInterpolation;
+    }
+    else{
+        return m_interpolation;
+    }
+}
+
+
+
+
+
+void RenderingSettings::setInterpolation(Interpolation interpolation) {
+    if(m_HQEnabled){
+        m_HQInterpolation = interpolation;
+    }
+    else{
+        m_interpolation = interpolation;
+    }
+}
+
+
+
+
+
+void RenderingSettings::setZoomIncrement(float zoom_increment) {
+    if(m_HQEnabled){
+        m_HQSpecs.zoomIncrement = zoom_increment;
+    }
+    else{
+        m_specs.zoomIncrement = zoom_increment;
+    }
+}
+
+
+
+
+
+float RenderingSettings::zoomIncrement() const {
+    if(m_HQEnabled){
+        return m_HQSpecs.zoomIncrement;
+    }
+    else{
+        return m_specs.zoomIncrement;
+    }
+}
+
+
+
+
+
+void RenderingSettings::setIllumEnabled(bool enabled) {
+    if(m_HQEnabled){
+        m_HQIllumination.enabled = enabled;
+    }
+    else{
+        m_illumination.enabled = enabled;
+    }
+}
+
+
+
+
+
+bool RenderingSettings::illumEnabled() const {
+    if(m_HQEnabled){
+        return m_HQIllumination.enabled;
+    }
+    else{
+        return m_illumination.enabled;
+    }
+}
+
+
+
+
+
+void RenderingSettings::setIllumAmbientPower(float power) {
+    if(m_HQEnabled){
+        m_HQIllumination.ambientPower = power;
+    }
+    else{
+        m_illumination.ambientPower = power;
+    }
+}
+
+
+
+
+
+float RenderingSettings::illumAmbientPower() const {
+    if(m_HQEnabled){
+        return m_HQIllumination.ambientPower;
+    }
+    else{
+        return m_illumination.ambientPower;
+    }
+}
+
+
+
+
+
+void RenderingSettings::setIllumDiffusePower(float power) {
+    if(m_HQEnabled){
+        m_HQIllumination.diffusePower = power;
+    }
+    else{
+        m_illumination.diffusePower = power;
+    }
+}
+
+
+
+
+
+float RenderingSettings::illumDiffusePower() const {
+    if(m_HQEnabled){
+        return m_HQIllumination.diffusePower;
+    }
+    else{
+        return m_illumination.diffusePower;
+    }
+}
+
+
+
+
+
+void RenderingSettings::setIllumSpecularPower(float power) {
+    if(m_HQEnabled){
+        m_HQIllumination.specularPower = power;
+    }
+    else{
+        m_illumination.specularPower = power;
+    }
+}
+
+
+
+
+
+float RenderingSettings::illumSpecularPower() const {
+    if(m_HQEnabled){
+        return m_HQIllumination.specularPower;
+    }
+    else{
+        return m_illumination.specularPower;
+    }
+}
+
+
+
+void RenderingSettings::setIllumShininess(int shininess) {
+    if(m_HQEnabled){
+        m_HQIllumination.shininess = shininess;
+    }
+    else{
+        m_illumination.shininess = shininess;
+    }
+}
+
+
+
+
+
+int RenderingSettings::illumShininess() const {
+    if(m_HQEnabled){
+        return m_HQIllumination.shininess;
+    }
+    else{
+        return m_illumination.shininess;
+    }
+}
+
+
+
+const RenderingSpecs &RenderingSettings::specs() const{
+    if(m_HQEnabled){
+        return m_HQSpecs;
+    }
+    else{
+        return m_specs;
+    }
+}
+
+
+void RenderingSettings::setHQEnabled(bool enabled){
+    m_HQEnabled = enabled;
+}
+
+
+
+bool RenderingSettings::HQEnabled() const{
+    return m_HQEnabled;
+}
+
+
+
+const Illumination &RenderingSettings::illumination() const {
+    if(m_HQEnabled) {
+        return m_HQIllumination;
+    }
+    else{
+        return m_illumination;
+    }
+}
+
+
+
+
+void RenderingSettings::setDevSyncronizeEnable(bool enabled) {
+    if(m_HQEnabled){
+        m_HQDevSyncronize = enabled;
+    }
+    else{
+        m_devSyncronize = enabled;
+    }
+}
+
+
+bool RenderingSettings::devSyncronizeEnabled() const {
+    if(m_HQEnabled){
+        return m_HQDevSyncronize;
+    }
+    else{
+        return m_devSyncronize;
+    }
+}
