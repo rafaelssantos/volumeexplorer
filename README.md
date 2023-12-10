@@ -8,10 +8,10 @@ VEx is an experimental tool with simplify volume interaction. This tool implemen
 
 
 ## Algorithms
-- [DBSCAN](https://cdn.aaai.org/KDD/1996/KDD96-037.pdf) and [Gunawan's DBSCAN]https://pure.tue.nl/ws/portalfiles/portal/46941219/760643-1.pdf)
-- [FastMap](https://dl.acm.org/doi/pdf/10.1145/223784.223812)
-- [Ray Casting]
-- [Sparse Spatial Selection](https://lbd.udc.es/Repository/Publications/Drafts/SpaSelofSpa.pdf) 
+- [DBSCAN](https://cdn.aaai.org/KDD/1996/KDD96-037.pdf) and [Gunawan's DBSCAN]https://pure.tue.nl/ws/portalfiles/portal/46941219/760643-1.pdf).
+- [FastMap](https://dl.acm.org/doi/pdf/10.1145/223784.223812).
+- [Ray Casting](https://sci-hub.se/10.1109/38.511).
+- [Sparse Spatial Selection](https://lbd.udc.es/Repository/Publications/Drafts/SpaSelofSpa.pdf).
 
 
 ## Key features:
