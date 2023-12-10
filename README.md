@@ -8,18 +8,20 @@ VEx is an experimental tool with simplify volume interaction. This tool implemen
 
 
 ## Algorithms
-- [DBSCAN](https://cdn.aaai.org/KDD/1996/KDD96-037.pdf) and [Gunawan's DBSCAN](https://pure.tue.nl/ws/portalfiles/portal/46941219/760643-1.pdf)
-- [FastMap](https://dl.acm.org/doi/pdf/10.1145/223784.223812
+- [DBSCAN](https://cdn.aaai.org/KDD/1996/KDD96-037.pdf) and [Gunawan's DBSCAN]https://pure.tue.nl/ws/portalfiles/portal/46941219/760643-1.pdf)
+- [FastMap](https://dl.acm.org/doi/pdf/10.1145/223784.223812)
 - [Ray Casting]
 - [Sparse Spatial Selection](https://lbd.udc.es/Repository/Publications/Drafts/SpaSelofSpa.pdf) 
 
 
 ## Key features:
 - Multidimensional transfer functions.
+- Volume feature exploration on a simplified 2D space.
+- Clustering based approach to assist volume exploration.
 
 
 ## Sytem Requirements 
-- Linux distro with support of libraries and frameworks .
+- Linux distro with support of required libraries and frameworks .
 - C++17.
 - CUDA toolkit 11 or later.
 - Qt Framework 6.0  or later.
