@@ -1,28 +1,29 @@
 # Volume Explorer (VEx)
 
-A volume visualization tool for multidimensional transfer function design in Direct Volume Rendering (DVR).
+A tool for advanced volume visualization with a focus on multidimensional transfer function design for Direct Volume Rendering (DVR).
+
 
 
 ## Description
-VEx is an experimental tool with simplify volume interaction. This tool implements [Santos (2018)](https://repositorio.unesp.br/items/5d693752-868f-4670-aa80-5e2180469e3b) approach that combines [FastMap](https://dl.acm.org/doi/pdf/10.1145/223784.223812), [DBSCAN](https://pure.tue.nl/ws/portalfiles/portal/46941219/760643-1.pdf), and [Sparse Spatial Selection](https://lbd.udc.es/Repository/Publications/Drafts/SpaSelofSpa.pdf) algorithms for a comprehensive and a low computational cost volume feature exploration space.
+VEx is an experimental tool designed to simplify volume interaction. This tool implements [Santos (2018)](https://repositorio.unesp.br/items/5d693752-868f-4670-aa80-5e2180469e3b) approach, that combines [FastMap](https://dl.acm.org/doi/pdf/10.1145/223784.223812), [DBSCAN](https://pure.tue.nl/ws/portalfiles/portal/46941219/760643-1.pdf), and [Sparse Spatial Selection](https://lbd.udc.es/Repository/Publications/Drafts/SpaSelofSpa.pdf) algorithms to enable comprehensive volume feature exploration at a low computational cost.
 
 
 ## Algorithms
-- [DBSCAN](https://cdn.aaai.org/KDD/1996/KDD96-037.pdf) and [Gunawan's DBSCAN]https://pure.tue.nl/ws/portalfiles/portal/46941219/760643-1.pdf).
-- [FastMap](https://dl.acm.org/doi/pdf/10.1145/223784.223812).
-- [Ray Casting](https://sci-hub.se/10.1109/38.511).
-- [Sparse Spatial Selection](https://lbd.udc.es/Repository/Publications/Drafts/SpaSelofSpa.pdf).
+- [Gunawan's DBSCAN]https://pure.tue.nl/ws/portalfiles/portal/46941219/760643-1.pdf). Utilizes both an enhanced version based on Gunawan's work for effective fast DBSCAN on a 2D space.
+- [FastMap](https://dl.acm.org/doi/pdf/10.1145/223784.223812). Implements FastMap algorithm for dimensionality reduction.
+- [Ray Casting](https://sci-hub.se/10.1109/38.511). Utilizes Ray Casting for efficient volume rendering.
+- [Sparse Spatial Selection](https://lbd.udc.es/Repository/Publications/Drafts/SpaSelofSpa.pdf). Applies SSS algorithm for produce pivos and subfeature classification.
 
 
 ## Key features:
 - Multidimensional transfer functions.
-- Volume feature exploration on a simplified 2D space.
-- Clustering based approach to assist volume exploration.
+- Volume feature exploration in 2D Spaces.
+- Clustering based approach to assist volume feature classification.
 
 
 ## Sytem Requirements 
-- Linux distro with support of required libraries and frameworks .
+- Linux distribution with required library and framework support.
 - C++17.
 - CUDA toolkit 11 or later.
-- Qt Framework 6.0  or later.
+- Qt Framework 6.0 or later.
 - OpenCV 4.0 or later.
