@@ -9,7 +9,7 @@ VEx is an experimental tool designed to simplify volume interaction. This tool i
 
 
 ## Algorithms
-- [Gunawan's DBSCAN]https://pure.tue.nl/ws/portalfiles/portal/46941219/760643-1.pdf). Utilizes both an enhanced version based on Gunawan's work for effective fast DBSCAN on a 2D space.
+- [Gunawan's DBSCAN](https://pure.tue.nl/ws/portalfiles/portal/46941219/760643-1.pdf). Utilizes both an enhanced version based on Gunawan's work for effective fast DBSCAN on a 2D space.
 - [FastMap](https://dl.acm.org/doi/pdf/10.1145/223784.223812). Implements FastMap algorithm for dimensionality reduction.
 - [Ray Casting](https://sci-hub.se/10.1109/38.511). Utilizes Ray Casting for efficient volume rendering.
 - [Sparse Spatial Selection](https://lbd.udc.es/Repository/Publications/Drafts/SpaSelofSpa.pdf). Applies SSS algorithm for produce pivos and subfeature classification.
