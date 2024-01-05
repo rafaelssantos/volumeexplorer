@@ -216,7 +216,7 @@ void AttributeManager::saveToCSV(const std::vector<std::vector<float> *> &data, 
     outfile.open(filePath, ios_base::app);
 
     for(int i = 0; i < descriptions.size() - 1; i++){
-        outfile << descriptions[i] << ", ";
+        outfile << descriptions[i] << ",";
     }
     outfile << descriptions.back() << "\n";
 
