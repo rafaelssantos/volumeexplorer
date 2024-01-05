@@ -41,7 +41,7 @@ void AttributeDialog::initComponents(){
 	connect(m_ui->pbCancel, SIGNAL(clicked()), this, SLOT(slotEmitSignalRejected()));
 	connect(this, SIGNAL(rejected()), this, SLOT(slotEmitSignalRejected()));
 	connect(m_ui->pbSelectAll, SIGNAL(clicked()), this, SLOT(slotSelectAll()));
-    connect(m_ui->pbCSVFile, SIGNAL(clicked()), this, SLOT(slotEmitSignalOpenCVSFile()));
+    connect(m_ui->pbFilePath, SIGNAL(clicked()), this, SLOT(slotEmitSignalOpenFile()));
 }
 
 
@@ -61,7 +61,7 @@ void AttributeDialog::slotSetAvailableTypes(const std::set<AttributeType> &avail
 	m_attributeTypes.clear();
 	int i = 0;
 	for(auto t = availableTypes.begin(); t != availableTypes.end(); t++){
-		QCheckBox *checkBox = new QCheckBox(QString::fromStdString(AttributeManager::instance().description(*t)), this);
+		QCheckBox *checkBox = new QCheckBox(QString::fromStdString(AttributeManager::instance().name(*t)), this);
 
 		m_checkboxes.emplace_back(checkBox);
 		m_ui->groupBoxTypesLayout->addWidget(checkBox, i, 0);
@@ -73,8 +73,8 @@ void AttributeDialog::slotSetAvailableTypes(const std::set<AttributeType> &avail
 
 
 
-void AttributeDialog::slotSetCSVFilePath(QString filePath) {
-    m_ui->leCSVFilePath->setText(filePath);
+void AttributeDialog::slotSetFilePath(QString filePath) {
+    m_ui->leFilePath->setText(filePath);
 }
 
 
@@ -90,13 +90,13 @@ void AttributeDialog::slotEmitSignalAccepted(){
 		}
 	}
 	if(selectedTypes.size() > 0){
-        emit signalAccepted(selectedTypes, m_ui->sbSide->value(), m_ui->leCSVFilePath->text().toStdString());
+        emit signalAccepted(selectedTypes, m_ui->sbSide->value(), m_ui->leFilePath->text().toStdString());
     }
 }
 
 
 
-void AttributeDialog::slotEmitSignalOpenCVSFile() {
+void AttributeDialog::slotEmitSignalOpenFile() {
     emit signalOpenCSVFile();
 }
 

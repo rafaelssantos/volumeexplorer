@@ -70,7 +70,7 @@ __device__ void _calcVariance(const unsigned *histogram, unsigned nVoxels, float
 
 Variance::Variance() : Attribute(){
     setType(AttributeType::VARIANCE);
-    setDescription("Variance");
+    setName("Variance");
 }
 
 

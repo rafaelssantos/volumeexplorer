@@ -26,7 +26,7 @@ private:
 	void init();
 
     AttributeDialog m_attributeDialog;
-    QFileDialog m_csvFileDialog;
+    QFileDialog m_fileDialog;
 
 
 
@@ -42,7 +42,7 @@ signals:
 public slots:
     int slotExecAttributeDialog();
 
-    int slotExecCSVFileDialog();
+    int slotExecFileDialog();
 
 
 private slots:

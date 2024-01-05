@@ -84,7 +84,7 @@ __device__ void _calcSkewness(const unsigned *histogram, unsigned nVoxels, float
 
 Skewness::Skewness() : Attribute(){
     setType(AttributeType::SKEWNESS);
-    setDescription("Skewness");
+    setName("Skewness");
 }
 
 

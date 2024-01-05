@@ -33,9 +33,9 @@ AttributeManager& AttributeManager::instance() {
 
 
 vector<vector<float>*>* AttributeManager::exec(const std::set<AttributeType>& types, size_t voxelCount, int mask, string filePath) {
-    vector<vector<float>*>* data = new vector<vector<float>*>();
-    vector<string> descriptions;
-    vector<float>* attrData = nullptr;
+    vector<vector<float>*>* values = new vector<vector<float>*>();
+    vector<string> names;
+    vector<float>* value = nullptr;
 
 
 	Intensity intensity;
@@ -53,69 +53,70 @@ vector<vector<float>*>* AttributeManager::exec(const std::set<AttributeType>& ty
     Inertia inertia;
 
 	for(auto t = types.begin(); t != types.end(); t++){
-        descriptions.emplace_back(description(*t));
+        names.emplace_back(name(*t));
 
 		switch (*t) {
             case AttributeType::ABSOLUTE_DEVIATION:
-                attrData = absoluteDeviation.extract(m_volume, voxelCount, m_kernelBlockDim, mask);
-                data->emplace_back(attrData);
+                value = absoluteDeviation.extract(m_volume, voxelCount, m_kernelBlockDim, mask);
+                values->emplace_back(value);
                 break;
             case AttributeType::CONTRAST:
-                attrData = constrast.extract(m_volume, voxelCount, m_kernelBlockDim, mask);
-                data->emplace_back(attrData);
+                value = constrast.extract(m_volume, voxelCount, m_kernelBlockDim, mask);
+                values->emplace_back(value);
                 break;
             case AttributeType::ENERGY :
-                attrData = energy.extract(m_volume, voxelCount, m_kernelBlockDim, mask);
-                data->emplace_back(attrData);
+                value = energy.extract(m_volume, voxelCount, m_kernelBlockDim, mask);
+                values->emplace_back(value);
                 break;
             case AttributeType::ENTROPY :
-                attrData = entropy.extract(m_volume, voxelCount, m_kernelBlockDim, mask);
-                data->emplace_back(attrData);
+                value = entropy.extract(m_volume, voxelCount, m_kernelBlockDim, mask);
+                values->emplace_back(value);
                 break;
 			case AttributeType::GRADIENT :
-                attrData = gradient.extract(m_volume, voxelCount, m_kernelBlockDim, mask);
-                data->emplace_back(attrData);
+                value = gradient.extract(m_volume, voxelCount, m_kernelBlockDim, mask);
+                values->emplace_back(value);
 				break;
             case AttributeType::INERTIA:
-                attrData = inertia.extract(m_volume, voxelCount, m_kernelBlockDim, mask);
-                data->emplace_back(attrData);
+                value = inertia.extract(m_volume, voxelCount, m_kernelBlockDim, mask);
+                values->emplace_back(value);
                 break;
             case AttributeType::KURTOSIS:
-                attrData = kurtosis.extract(m_volume, voxelCount, m_kernelBlockDim, mask);
-                data->emplace_back(attrData);
+                value = kurtosis.extract(m_volume, voxelCount, m_kernelBlockDim, mask);
+                values->emplace_back(value);
                 break;
             case AttributeType::INTENSITY :
-                attrData = intensity.extract(m_volume, voxelCount, m_kernelBlockDim, mask);
-                data->emplace_back(attrData);
+                value = intensity.extract(m_volume, voxelCount, m_kernelBlockDim, mask);
+                values->emplace_back(value);
                 break;
             case AttributeType::LAPLACIAN :
-                attrData = laplacian.extract(m_volume, voxelCount, m_kernelBlockDim, mask);
-                data->emplace_back(attrData);
+                value = laplacian.extract(m_volume, voxelCount, m_kernelBlockDim, mask);
+                values->emplace_back(value);
                 break;
 			case AttributeType::MEAN :
-                attrData = mean.extract(m_volume, voxelCount, m_kernelBlockDim, mask);
-                data->emplace_back(attrData);
+                value = mean.extract(m_volume, voxelCount, m_kernelBlockDim, mask);
+                values->emplace_back(value);
 				break;
             case AttributeType::SKEWNESS:
-                attrData = skewness.extract(m_volume, voxelCount, m_kernelBlockDim, mask);
-                data->emplace_back(attrData);
+                value = skewness.extract(m_volume, voxelCount, m_kernelBlockDim, mask);
+                values->emplace_back(value);
                 break;
 			case AttributeType::STANDARD_DEVIATION:
-                attrData = standardDeviation.extract(m_volume, voxelCount, m_kernelBlockDim, mask);
-                data->emplace_back(attrData);
+                value = standardDeviation.extract(m_volume, voxelCount, m_kernelBlockDim, mask);
+                values->emplace_back(value);
 				break;
             case AttributeType::VARIANCE:
-                attrData = variance.extract(m_volume, voxelCount, m_kernelBlockDim, mask);
-                data->emplace_back(attrData);
+                value = variance.extract(m_volume, voxelCount, m_kernelBlockDim, mask);
+                values->emplace_back(value);
                 break;
 		}
 	}
 
-    if(filePath != "" && !descriptions.empty()){
-        saveToCSV(*data, descriptions, filePath);
+    if(filePath != "" && !names.empty()){
+        // saveToCSV(*data, descriptions, filePath);
+        saveToAttr(*values, names, filePath);
     }
 
-    return data;
+    return values;
 }
 
 
@@ -143,15 +144,15 @@ void AttributeManager::setKernelBlockDim(unsigned x, unsigned y, unsigned z) {
 
 
 
-void AttributeManager::free(std::vector<std::vector<float>* >* data) const {
-	if(data != nullptr){
-		for(auto i = 0u; i < data->size(); i++){
-			delete data->at(i);
-			data->at(i) = nullptr;
+void AttributeManager::free(std::vector<std::vector<float>* >* values) const {
+    if(values != nullptr){
+        for(auto i = 0u; i < values->size(); i++){
+            delete values->at(i);
+            values->at(i) = nullptr;
 		}
 	}
-	delete data;
-	data = nullptr;
+    delete values;
+    values = nullptr;
 }
 
 
@@ -162,77 +163,105 @@ const std::set<AttributeType>& AttributeManager::availableTypes() const {
 
 
 
-string AttributeManager::description(AttributeType type) const {
-	string description = "None";
+string AttributeManager::name(AttributeType type) const {
+    string name = "None";
 
 	switch (type) {
 		case AttributeType::ABSOLUTE_DEVIATION:
-			description = "Absolute deviation";
+            name = "Absolute deviation";
 			break;
         case AttributeType::CONTRAST:
-            description = "Contrast";
+            name = "Contrast";
             break;
 		case AttributeType::ENERGY:
-			description = "Energy";
+            name = "Energy";
 			break;
 		case AttributeType::ENTROPY:
-			description = "Entropy";
+            name = "Entropy";
 			break;
 		case AttributeType::GRADIENT:
-            description = "Gradient Magnitude";
+            name = "Gradient Magnitude";
 			break;
         case AttributeType::INERTIA:
-            description = "Inertia";
+            name = "Inertia";
             break;
 		case AttributeType::INTENSITY:
-			description = "Intensity";
+            name = "Intensity";
 			break;
 		case AttributeType::KURTOSIS:
-			description = "Kurtosis";
+            name = "Kurtosis";
 			break;
         case AttributeType::LAPLACIAN:
-            description = "Laplacian Magnitude";
+            name = "Laplacian Magnitude";
             break;
 		case AttributeType::MEAN:
-			description = "Mean";
+            name = "Mean";
 			break;
 		case AttributeType::SKEWNESS:
-			description = "Skewness";
+            name = "Skewness";
             break;
 		case AttributeType::STANDARD_DEVIATION:
-			description = "Standard deviation";
+            name = "Standard deviation";
 			break;
 		case AttributeType::VARIANCE:
-			description = "Variance";
+            name = "Variance";
 			break;
 	}
 
-        return description;
+        return name;
 }
 
-void AttributeManager::saveToCSV(const std::vector<std::vector<float> *> &data, const std::vector<string> &descriptions, std::string filePath) const {
-    std::ofstream outfile;
+void AttributeManager::saveToCSV(const std::vector<std::vector<float> *> &data, const std::vector<string> &names, std::string filePath) const {
+    std::ofstream file;
 
-    outfile.open(filePath, ios_base::app);
+    file.open(filePath, ios_base::app);
 
-    for(int i = 0; i < descriptions.size() - 1; i++){
-        outfile << descriptions[i] << ",";
+    for(int i = 0; i < names.size() - 1; i++){
+        file << names[i] << ",";
     }
-    outfile << descriptions.back() << "\n";
+    file << names.back() << "\n";
 
     for(int i = 0; i < data.front()->size(); i++){
         for(int a = 0; a < data.size(); a++){
-            outfile << data.at(a)->at(i);
+            file << data.at(a)->at(i);
             if(a < data.size() - 1){
-                outfile << ",";
+                file << ",";
             }
             else{
-                outfile << "\n";
+                file << "\n";
             }
         }
     }
 
-    outfile.close();
+    file.close();
+}
+
+
+void AttributeManager::saveToAttr(const std::vector<std::vector<float> *> &data, const std::vector<std::string> &names, std::string filePath) const {
+    std::ofstream file;
+
+    file.open(filePath, ios_base::binary | ios::out);
+    string strNames = "";
+
+    for(int i = 0; i < names.size() - 1; i++){
+        strNames = strNames +  names[i] + ",";
+    }
+    strNames = strNames + names.back();
+
+    int n = data.front()->size();                                  //Number of instances
+    file.write(reinterpret_cast<char*>(&n), sizeof(int));
+    int size = strNames.size();
+    file.write(reinterpret_cast<char*>(&size), sizeof(size));
+    file.write(reinterpret_cast<char*>(&strNames[0]), size);
+
+    for(int a = 0; a < data.size(); a++){
+        for(int i = 0; i < data.at(a)->size(); i++){
+            float value = data.at(a)->at(i);
+            file.write(reinterpret_cast<char*>(&value), sizeof(float));
+        }
+    }
+
+    file.close();
 }
 
 

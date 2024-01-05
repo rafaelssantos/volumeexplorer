@@ -50,15 +50,15 @@ AttributeUIController::~AttributeUIController(){
 
 void AttributeUIController::init(){
     connect(&m_attributeDialog, SIGNAL(signalAccepted(std::set<attribute::AttributeType>&, int, std::string)), this, SLOT(slotDialogAccepted(std::set<attribute::AttributeType>&, int, std::string)));
-    connect(&m_attributeDialog, SIGNAL(signalOpenCSVFile()), this, SLOT(slotExecCSVFileDialog()));
-    connect(&m_csvFileDialog, SIGNAL(fileSelected(QString)), &m_attributeDialog, SLOT(slotSetCSVFilePath(QString)));
+    connect(&m_attributeDialog, SIGNAL(signalOpenCSVFile()), this, SLOT(slotExecFileDialog()));
+    connect(&m_fileDialog, SIGNAL(fileSelected(QString)), &m_attributeDialog, SLOT(slotSetFilePath(QString)));
 
     m_attributeDialog.slotSetAvailableTypes(VolumeExplorer::instance().availableAttributes());
 
-    m_csvFileDialog.setWindowTitle("Save CSV attribute data");
-    m_csvFileDialog.setAcceptMode(QFileDialog::AcceptSave);
-    m_csvFileDialog.setNameFilter("*.csv");
-    m_csvFileDialog.setDefaultSuffix(".csv");
+    m_fileDialog.setWindowTitle("Save CSV attribute data");
+    m_fileDialog.setAcceptMode(QFileDialog::AcceptSave);
+    m_fileDialog.setNameFilter("*.attr");
+    m_fileDialog.setDefaultSuffix(".attr");
 }
 
 
@@ -72,8 +72,8 @@ int AttributeUIController::slotExecAttributeDialog(){
 
 
 
-int AttributeUIController::slotExecCSVFileDialog() {
-    return m_csvFileDialog.exec();
+int AttributeUIController::slotExecFileDialog() {
+    return m_fileDialog.exec();
 }
 
 
@@ -82,7 +82,7 @@ void AttributeUIController::slotDialogAccepted(std::set<attribute::AttributeType
 	if(VolumeExplorer::instance().isDatasetLoaded()){
 		Logger::instance().appendMessage("SELECTED ATTRIBUTES:");
 		for(auto t = types.begin(); t != types.end(); t++){
-			Logger::instance().appendMessage("- " + AttributeManager::instance().description(*t));
+			Logger::instance().appendMessage("- " + AttributeManager::instance().name(*t));
 		}
 		Logger::instance().appendMessage("");
 

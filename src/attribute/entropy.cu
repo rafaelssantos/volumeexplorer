@@ -76,7 +76,7 @@ __device__ void _calcEntropy(const unsigned *histogram, unsigned nVoxels, float 
 
 Entropy::Entropy() : Attribute(){
     setType(AttributeType::ENTROPY);
-    setDescription("Entropy");
+    setName("Entropy");
 }
 
 

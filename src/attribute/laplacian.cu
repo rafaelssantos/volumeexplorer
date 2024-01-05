@@ -113,7 +113,7 @@ __device__ float _calcLaplacian(const Volume* volume, int index){
 
 Laplacian::Laplacian() : Attribute(){
     setType(AttributeType::LAPLACIAN);
-    setDescription("Laplacian");
+    setName("Laplacian");
 }
 
 

@@ -41,7 +41,7 @@ signals:
 public slots:
 	void slotSetAvailableTypes(const std::set<attribute::AttributeType>& availableTypes);
 
-    void slotSetCSVFilePath(QString filePath);
+    void slotSetFilePath(QString filePath);
 
 	void slotSelectAll();
 
@@ -62,7 +62,7 @@ private slots:
 
 	void slotEmitSignalAccepted();
 
-    void slotEmitSignalOpenCVSFile();
+    void slotEmitSignalOpenFile();
 
 	void slotEmitSignalRejected();
 };

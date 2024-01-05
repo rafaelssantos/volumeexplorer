@@ -71,7 +71,7 @@ __device__ void _calcContrast(const unsigned *histogram, unsigned nVoxels, float
 
 Contrast::Contrast() : Attribute(){
     setType(AttributeType::CONTRAST);
-    setDescription("Sum Entropy");
+    setName("Sum Entropy");
 }
 
 

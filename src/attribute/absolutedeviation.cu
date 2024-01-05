@@ -75,7 +75,7 @@ __device__ void _calcAbsoluteDeviation(const unsigned *histogram, unsigned nVoxe
 
 AbsoluteDeviation::AbsoluteDeviation() : Attribute(){
 	setType(AttributeType::ABSOLUTE_DEVIATION);
-	setDescription("Absolute Deviation");
+	setName("Absolute Deviation");
 }
 
 

@@ -69,7 +69,7 @@ __device__ void _calcEnergy(const unsigned *histogram, unsigned nVoxels, float *
 
 Energy::Energy() : Attribute(){
     setType(AttributeType::ENERGY);
-    setDescription("Energy");
+    setName("Energy");
 }
 
 

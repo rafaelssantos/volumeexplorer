@@ -70,7 +70,7 @@ __device__ void _calcInertia(const unsigned *histogram, unsigned nVoxels, float 
 
 Inertia::Inertia() : Attribute(){
     setType(AttributeType::INERTIA);
-    setDescription("Smoothness");
+    setName("Smoothness");
 }
 
 

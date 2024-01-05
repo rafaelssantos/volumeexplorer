@@ -33,7 +33,7 @@ __device__ float Intensity::_calcIntensity(const Volume* volume, int index){
 
 Intensity::Intensity() : Attribute(){
 	setType(AttributeType::INTENSITY);
-	setDescription("Intesity");
+	setName("Intesity");
 }
 
 

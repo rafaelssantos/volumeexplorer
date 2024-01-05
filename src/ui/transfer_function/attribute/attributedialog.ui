@@ -39,18 +39,18 @@
       <item row="0" column="0">
        <widget class="QGroupBox" name="groupBox">
         <property name="title">
-         <string>CSV File</string>
+         <string>Attribute file:</string>
         </property>
         <layout class="QGridLayout" name="gridLayout_6">
          <item row="0" column="0">
-          <widget class="QLineEdit" name="leCSVFilePath">
+          <widget class="QLineEdit" name="leFilePath">
            <property name="text">
             <string/>
            </property>
           </widget>
          </item>
          <item row="0" column="1">
-          <widget class="QPushButton" name="pbCSVFile">
+          <widget class="QPushButton" name="pbFilePath">
            <property name="text">
             <string>...</string>
            </property>

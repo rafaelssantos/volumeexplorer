@@ -25,12 +25,15 @@ public:
 
 	void setKernelBlockDim(unsigned x, unsigned y, unsigned z);
 
-	void free(std::vector<std::vector<float>*> *data) const;
+    void free(std::vector<std::vector<float>*> *values) const;
 
     const std::set<AttributeType>& availableTypes() const;
 
-    std::string description(AttributeType type) const;
+    std::string name(AttributeType type) const;
 
+    void saveToCSV(const std::vector<std::vector<float>*>& data, const std::vector<std::string>& names, std::string filePath) const;
+
+    void saveToAttr(const std::vector<std::vector<float>*>& data, const std::vector<std::string>& names, std::string filePath) const;
 
 
 private:
@@ -38,7 +41,6 @@ private:
 
 	virtual ~AttributeManager();
 
-    void saveToCSV(const std::vector<std::vector<float>*>& data, const std::vector<std::string>& descriptions, std::string filePath) const;
 
 
 private:

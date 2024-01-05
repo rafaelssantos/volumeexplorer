@@ -70,7 +70,7 @@ __device__ void _calcStandardDeviation(const unsigned *histogram, int nVoxels, f
 
 StandardDeviation::StandardDeviation() : Attribute(){
     setType(AttributeType::STANDARD_DEVIATION);
-    setDescription("Standard Deviation");
+    setName("Standard Deviation");
 }
 
 

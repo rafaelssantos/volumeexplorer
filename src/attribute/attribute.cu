@@ -7,7 +7,7 @@ using namespace volume;
 
 
 Attribute::Attribute() {
-	m_description = "";
+	m_name = "";
 }
 
 
@@ -25,8 +25,8 @@ AttributeType Attribute::type() const {
 
 
 
-const string& Attribute::description() const {
-	return m_description;
+const string& Attribute::name() const {
+	return m_name;
 }
 
 
@@ -54,6 +54,6 @@ void Attribute::setType(AttributeType type) {
 
 
 
-void Attribute::setDescription(const string& description) {
-	m_description = description;
+void Attribute::setName(const string& description) {
+	m_name = description;
 }

@@ -85,7 +85,7 @@ __device__ void _calcKurtosis(const unsigned *histogram, unsigned nVoxels, float
 
 Kurtosis::Kurtosis() : Attribute(){
     setType(AttributeType::KURTOSIS);
-    setDescription("Kurtosis");
+    setName("Kurtosis");
 }
 
 

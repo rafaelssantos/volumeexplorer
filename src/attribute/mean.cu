@@ -105,7 +105,7 @@ __device__ void _calcHistogram(const Volume *volume, int index, int texSide, uns
 
 Mean::Mean() : Attribute(){
 	setType(AttributeType::MEAN);
-	setDescription("Mean");
+	setName("Mean");
 }
 
 

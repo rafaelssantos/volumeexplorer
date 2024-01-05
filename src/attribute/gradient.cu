@@ -67,7 +67,7 @@ __device__ float _calcGradient(const Volume* volume, int index){
 
 Gradient::Gradient() : Attribute(){
     setType(AttributeType::GRADIENT);
-    setDescription("Gradient");
+    setName("Gradient");
 }
 
 

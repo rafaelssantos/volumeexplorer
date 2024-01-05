@@ -19,13 +19,13 @@ public:
 
 	AttributeType type() const;
 
-	const std::string& description() const;
+    const std::string& name() const;
 
 	std::vector<float> *extract(const volume::Volume* volume, size_t voxelCount, dim3 blockDim, int mask);
 
 
 protected:
-	void setDescription(const std::string& description);
+    void setName(const std::string& description);
 
 	void setType(AttributeType type);
 
@@ -34,7 +34,7 @@ protected:
 
 private:
 	AttributeType m_type;
-	std::string m_description;
+    std::string m_name;
 };
 }
 
