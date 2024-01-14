@@ -28,16 +28,37 @@ VEx is an experimental tool designed to simplify volume interaction. This tool i
 - OpenCV library version 4.0 or later.
 - Qt Framework version 6.0 or later.
 ### Dependencies to install
-In addition to the CUDA C/C++ Development Toolkit and Qt Frameworks, it is necessary to install the following dependencies:
-- Imgcodecs OpenCV module.
-- High-level GUI OpenCV module.
-- FLANN OpenCV module.
-- OpenGL Utility Toolkit (GLUT).
-All dependencies can be installed using the following commands (for UBUNTU or other DEBIAN-based distributions):
+In addition to the CUDA C/C++ Development Toolkit and Qt Frameworks, it is necessary to install some dependencies. 
+
+OpenCV modules:
+- (calib3D module) Camera calibration and 3D reconstruction 
+- (dnn module) Deep Neural Networks
+- (flann module) FLANN
+- (highgui module) High-level GUI
+- (imgcodecs module) Imgcodecs
+- (objdetect module) Object Detection
+- (photo module) Computational photography
+- (stitching module) Images stitching
+- (video module) Video analysis 
+
+OpenGL modules:
+- OpenGL Utility Toolkit (GLUT library).
+
+All OpenCV dependencies can be installed using the following commands (for UBUNTU or other DEBIAN-based distributions):
 ```
-sudo apt install libopencv-imgcodecs-dev
+sudo apt install libopencv-calib3d-dev 
+sudo apt install libopencv-dnn-dev
+sudo apt install libopencv-flann-dev
 sudo apt install libopencv-highgui-dev
-sudo apt install libopencv-flann-dev 
+sudo apt install libopencv-imgcodecs-dev
+sudo apt install libopencv-objdetect-dev
+sudo apt install libopencv-photo-dev
+sudo apt install libopencv-stitching-dev
+sudo apt install libopencv-video-dev
+```
+
+All OpenGL dependencies can be installed using the following commands (for UBUNTU or other DEBIAN-based distributions):
+```
 sudo apt install freeglut3-dev
 ```
 
