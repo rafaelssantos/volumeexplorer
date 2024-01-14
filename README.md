@@ -25,5 +25,18 @@ VEx is an experimental tool designed to simplify volume interaction. This tool i
 - Linux distribution with required library and framework support.
 - C++17.
 - CUDA toolkit 11 or later.
-- Qt Framework 6.0 or later.
 - OpenCV 4.0 or later.
+- Qt Framework 6.0 or later.
+### Package to install
+Besides the CUDA C/C++ Developement Tookit and Qt Frameworks, it is required to install the following depenencies:
+- Imgcodecs OpenCV module.
+- High-level GUI OpenCV module.
+- FLANN OpenCV module.
+- OpenGL Utility Toolkit (GLUT).
+All dependencies can be install as the following codes:
+```
+git status
+git add
+git commit
+```
+
