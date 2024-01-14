@@ -22,6 +22,8 @@ public:
 
     void setWindowVisible(bool visible);
 
+    void saveToFile(QString filePath);
+
 
 
 private:

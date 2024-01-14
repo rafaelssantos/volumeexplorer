@@ -293,6 +293,7 @@ void TFDesignerUIController::slotPivotScreenshot(QString path) {
 
 		RenderingUIController::instance().slotExportScreenshot(path + "/rendering_pivot_" + QString::number(i) + ".png");
 	}
+    Logger::instance().saveToFile(path +"/rendering.log");
 
 	TFDesigner::instance().unselectAll();
 	RenderingUIController::instance().slotUpdate();
@@ -314,6 +315,7 @@ void TFDesignerUIController::slotClusterScreenshot(QString path) {
 
         RenderingUIController::instance().slotExportScreenshot(path + "/rendering_cluster_" + QString::number(i) + ".png");
 	}
+    Logger::instance().saveToFile(path +"/rendering.log");
 
 	TFDesigner::instance().unselectAll();
 	RenderingUIController::instance().slotUpdate();
@@ -334,6 +336,7 @@ void TFDesignerUIController::slotGroupScreenshot(QString path) {
 
 		RenderingUIController::instance().slotExportScreenshot(path + "/rendering_group_" + QString::number(i) + ".png");
 	}
+    Logger::instance().saveToFile(path +"/rendering.log");
 
 	TFDesigner::instance().unselectAll();
 	RenderingUIController::instance().slotUpdate();

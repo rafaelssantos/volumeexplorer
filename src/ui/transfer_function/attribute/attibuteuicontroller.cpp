@@ -55,10 +55,10 @@ void AttributeUIController::init(){
 
     m_attributeDialog.slotSetAvailableTypes(VolumeExplorer::instance().availableAttributes());
 
-    m_fileDialog.setWindowTitle("Save CSV attribute data");
+    m_fileDialog.setWindowTitle("Save VEX attribute data");
     m_fileDialog.setAcceptMode(QFileDialog::AcceptSave);
-    m_fileDialog.setNameFilter("*.attr");
-    m_fileDialog.setDefaultSuffix(".attr");
+    m_fileDialog.setNameFilter("*.vex");
+    m_fileDialog.setDefaultSuffix(".vex");
 }
 
 

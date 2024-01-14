@@ -1,5 +1,6 @@
 #include "logger.h"
 
+#include <QFile>
 #include <QLocale>
 
 
@@ -43,7 +44,22 @@ void Logger::stopTimer(int i, std::string message) {
 
 
 void Logger::setWindowVisible(bool visible) {
-	m_window.setVisible(visible);
+    m_window.setVisible(visible);
+}
+
+
+
+void Logger::saveToFile(QString filePath) {
+    QFile fileObject(filePath);
+
+
+    if(!fileObject.open(QIODevice::WriteOnly))    {
+        qDebug() << "Error! could not open file.";
+    }
+
+    QTextStream stream(&fileObject);
+    stream << m_window.textEdit()->toPlainText();
+    fileObject.close();
 }
 
 
