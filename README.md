@@ -35,8 +35,10 @@ Besides the CUDA C/C++ Developement Tookit and Qt Frameworks, it is required to 
 - OpenGL Utility Toolkit (GLUT).
 All dependencies can be install as the following codes:
 ```
-git status
-git add
-git commit
+$ sudo apt install freeglut3-dev
+$
+$
+$
+
 ```
 
