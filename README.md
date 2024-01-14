@@ -27,18 +27,17 @@ VEx is an experimental tool designed to simplify volume interaction. This tool i
 - CUDA toolkit 11 or later.
 - OpenCV 4.0 or later.
 - Qt Framework 6.0 or later.
-### Package to install
-Besides the CUDA C/C++ Developement Tookit and Qt Frameworks, it is required to install the following depenencies:
+### Dependencies to install
+In addition to the CUDA C/C++ Development Toolkit and Qt Frameworks, it is necessary to install the following dependencies:
 - Imgcodecs OpenCV module.
 - High-level GUI OpenCV module.
-- FLANN OpenCV module.
+0 FLANN OpenCV module.
 - OpenGL Utility Toolkit (GLUT).
-All dependencies can be install as the following codes:
+All dependencies can be installed using the following commands (for UBUNTU or other DEBIAN-based distributions):
 ```
-$ sudo apt install freeglut3-dev
-$
-$
-$
-
+sudo apt install libopencv-imgcodecs-dev
+sudo apt install libopencv-highgui-dev
+sudo apt install libopencv-flann-dev 
+sudo apt install freeglut3-dev
 ```
 
