@@ -42,7 +42,7 @@ OpenCV modules:
 - (video module) Video analysis 
 
 OpenGL modules:
-- OpenGL Utility Toolkit (GLUT library).
+- (GLUT library) OpenGL Utility Toolkit.
 
 All OpenCV dependencies can be installed using the following commands (for UBUNTU or other DEBIAN-based distributions):
 ```
