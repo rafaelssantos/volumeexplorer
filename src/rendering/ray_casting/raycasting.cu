@@ -56,14 +56,14 @@ __global__ void _rayCastingKernel(GlPBOImage image, const Volume* volume, const 
         colorOut.z = 0;   //Azul
         colorOut.w = 0;   //Opacidade
 
-        float opacityCorrFactor = renderingSpecs.step / volume->voxelDiameter();
+        float corrFactor = renderingSpecs.step / volume->voxelDiameter();
 
         while(nSteps <= renderingSpecs.maxSteps && volume->isInCircumsphere(pos)) {                                                  //Dentro da esfera circunscrita ao volume
             if(volume->isPosIn(pos)) {
                 while(nSteps <= renderingSpecs.maxSteps && volume->isPosIn(pos) && colorOut.w <= renderingSpecs.maxOpacity) {       //Dentro do volume
                     float4 colorIn = transferFunc->colorAt(pos, eye, illumination, interpolation);
 
-                    colorIn.w = 1.0f - powf(1.0f - colorIn.w, opacityCorrFactor);
+                    colorIn.w = 1.0f - powf(1.0f - colorIn.w, corrFactor);
 
                     colorOut.x = colorOut.x + colorIn.x * colorIn.w * (1 - colorOut.w);
                     colorOut.y = colorOut.y + colorIn.y * colorIn.w * (1 - colorOut.w);
