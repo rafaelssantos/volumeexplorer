@@ -110,6 +110,7 @@ void RenderingUIController::slotExecScreenshotDialog() {
 
 void RenderingUIController::slotExportScreenshot(QString path) {
     slotUpdate();
+    cudaDeviceSynchronize();
     m_window.renderingWidget()->grabFramebuffer().save(path);
 }
 
@@ -127,7 +128,6 @@ void RenderingUIController::slotZoom(Zoom zoom) {
 
 
 void RenderingUIController::slotUpdate() {
-    m_fastRenderingEnabled = false;
     m_window.renderingWidget()->update();
 }
 
@@ -158,7 +158,6 @@ void RenderingUIController::slotSetDatasetFilesPath(std::list<std::string> files
 
 RenderingUIController::RenderingUIController() {
     m_volumeSpacingX = m_volumeSpacingY = m_volumeSpacingZ = 1.0f;
-    m_fastRenderingEnabled = true;
 	m_dirPath = "";
     init();
 }

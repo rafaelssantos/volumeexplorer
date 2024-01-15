@@ -36,11 +36,9 @@ private:
 	float m_volumeSpacingX;
 	float m_volumeSpacingY;
 	float m_volumeSpacingZ;
-    bool m_fastRenderingEnabled;
 
 
 private:
-	//Desabilitados
 	RenderingUIController(const RenderingUIController&) = delete;
 	void operator=(const RenderingUIController&) = delete;
 
