@@ -21,14 +21,14 @@ __global__ void _gradientKernel(const Volume* volume, float *data) {
     unsigned tid = ThreadIndexing::globalIdx();
 
     if(tid < volume->voxelCount()){
-        *(data + tid) = _calcGradient(volume, (int) tid);
+        *(data + tid) = _sobelOperator(volume, (int) tid);
 	}
 }
 
 
 
 
-__device__ float _calcGradient(const Volume* volume, int index){
+__device__ float _sobelOperator(const Volume* volume, int index){
 	int3 voxelIndex = volume->indexToIndex3(index);
 
 	float gX[3][3][3], gY[3][3][3], gZ[3][3][3];
@@ -62,6 +62,28 @@ __device__ float _calcGradient(const Volume* volume, int index){
 
     return QuaternionCalculator::norm(gradient);
 }
+
+
+
+
+
+__device__ float _centralDifferences(const Volume* volume, int index){
+    int3 index3 = volume->indexToIndex3(index);
+    float3 gradient = {0, 0, 0};
+
+    if(index3.x - 1 >= 0 && index3.x + 1 <volume->dim().x){
+        gradient.x = (static_cast<float>(volume->sampleAt(index3.x + 1, index3.y, index3.z)) - static_cast<float>(volume->sampleAt(index3.x - 1, index3.y, index3.z))) / (2 * volume->spacing().x);
+    }
+    if(index3.y - 1 >= 0 && index3.y + 1 <volume->dim().y){
+        gradient.y = (static_cast<float>(volume->sampleAt(index3.x, index3.y + 1, index3.z)) - static_cast<float>(volume->sampleAt(index3.x, index3.y - 1, index3.z))) / (2 * volume->spacing().y);
+    }
+    if(index3.z - 1 >= 0 && index3.z + 1 < volume->dim().z){
+        gradient.z = (static_cast<float>(volume->sampleAt(index3.x, index3.y, index3.z + 1)) - static_cast<float>(volume->sampleAt(index3.x, index3.y, index3.z - 1))) / (2  *volume->spacing().z);
+    }
+
+    return QuaternionCalculator::norm(gradient);
+}
+
 
 
 

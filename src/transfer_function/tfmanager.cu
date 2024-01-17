@@ -24,7 +24,7 @@ __global__ void _calcNormalsKernel(const Volume* volume, TransferFunction *trans
     const unsigned tid = ThreadIndexing::globalIdx();
 
     if(tid < volume->voxelCount()) {
-        TransferFunctionManager::_centralDifferences(volume, transferFunc, static_cast<int>(tid));
+        TransferFunctionManager::_sobelOperator(volume, transferFunc, static_cast<int>(tid));
     }
 }
 

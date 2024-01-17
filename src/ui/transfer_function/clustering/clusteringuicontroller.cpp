@@ -22,7 +22,7 @@ using namespace transfer_function;
 ClusteringUIController::ClusteringUIController() {
 	m_eps = 0.2f;
 	m_minPoints = 3;
-    m_alpha = 0.95f;
+    m_alpha = 0.9f;
 }
 
 ClusteringUIController::~ClusteringUIController() {

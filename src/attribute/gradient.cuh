@@ -26,7 +26,10 @@ protected:
 
 __global__ void _gradientKernel(const volume::Volume* volume, float *data);
 
-__device__ float _calcGradient(const volume::Volume* volume, int index);
+__device__ float _sobelOperator(const volume::Volume* volume, int index);
+
+__device__ float _centralDifferences(const volume::Volume* volume, int index);
+
 
 
 #endif
