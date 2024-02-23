@@ -283,7 +283,7 @@ void TFDesignerUIController::slotScreenshot(QString path) {
 
 void TFDesignerUIController::slotPivotScreenshot(QString path) {
     TFDesigner::instance().unselectAll();
-    slotScreenshot(path + "/tf_overview.png");
+    slotScreenshot(path + "/tf_pivot_overview.png");
 
 	for(auto i  = 0; i < TFDesigner::instance().pivotCount(); i++){
 		TFDesigner::instance().unselectAll();
@@ -305,7 +305,7 @@ void TFDesignerUIController::slotPivotScreenshot(QString path) {
 
 void TFDesignerUIController::slotClusterScreenshot(QString path) {
     TFDesigner::instance().unselectAll();
-    slotScreenshot(path + "/tf_overview.png");
+    slotScreenshot(path + "/tf_cluster_overview.png");
 
 	for(auto i  = 0; i < TFDesigner::instance().clusterCount(); i++){
 		TFDesigner::instance().unselectAll();
@@ -326,7 +326,7 @@ void TFDesignerUIController::slotClusterScreenshot(QString path) {
 
 void TFDesignerUIController::slotGroupScreenshot(QString path) {
     TFDesigner::instance().unselectAll();
-    slotScreenshot(path + "/tf_overview.png");
+    slotScreenshot(path + "/tf_group_overview.png");
 
     for(auto i  = 0; i < TFDesigner::instance().groupCount(); i++){
 		TFDesigner::instance().unselectAll();
