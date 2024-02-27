@@ -237,70 +237,74 @@ __host__ __device__ float4 TransferFunction::nearestColorAt(const float3& pos) c
 
 
 
-__host__ __device__ float4 TransferFunction::trilinearColorAt(const float3& pos) const {
-    int3 index = floorPosToIndex(pos);
+__host__ __device__ float4 TransferFunction::trilinearColorAt(const float3& p) const {
+    int3 index0 = floorPosToIndex(p);
+    int3 index1 = {index0.x + 1, index0.y + 1, index0.z + 1};
 
-    if(isIndex3In(index.x, index.y, index.z) && isIndex3In(index.x + 1, index.y + 1, index.z + 1)){
-        float4 color = {0, 0, 0, 0};
+    if(isIndex3In(index0) && isIndex3In(index1)){
+        float xD, yD, zD;
 
-        float x, y, z;
+        xD = (p.x - index0.x * spacing().x) / spacing().x;
+        yD = (p.y - index0.y * spacing().y) / spacing().y;
+        zD = (p.z - index0.z * spacing().z) / spacing().z;
 
-        x = pos.x - index.x * spacing().x;
-        y = pos.y - index.y * spacing().y;
-        z = pos.z - index.z * spacing().z;
 
         float4 color000, color001, color010, color011, color100, color101, color110, color111;
 
-        color000 = sampleAt(index.x, index.y, index.z);
-        color001 = sampleAt(index.x, index.y, index.z + 1);
-        color010 = sampleAt(index.x, index.y + 1, index.z);
-        color011 = sampleAt(index.x, index.y + 1, index.z + 1);
-        color100 = sampleAt(index.x + 1, index.y, index.z);
-        color101 = sampleAt(index.x + 1, index.y, index.z + 1);
-        color110 = sampleAt(index.x + 1, index.y + 1, index.z);
-        color111 = sampleAt(index.x + 1, index.y + 1, index.z + 1);
+        color000 = sampleAt(index0.x, index0.y, index0.z);
+        color001 = sampleAt(index0.x, index0.y, index1.z);
+        color010 = sampleAt(index0.x, index1.y, index0.z);
+        color011 = sampleAt(index0.x, index1.y, index1.z);
+        color100 = sampleAt(index1.x, index0.y, index0.z);
+        color101 = sampleAt(index1.x, index0.y, index1.z);
+        color110 = sampleAt(index1.x, index1.y, index0.z);
+        color111 = sampleAt(index1.x, index1.y, index1.z);
+
+        float4 color00, color01, color10, color11;
+
+        color00.x = color000.x * (1 - xD) + color100.x * xD;
+        color00.y = color000.y * (1 - xD) + color100.y * xD;
+        color00.z = color000.z * (1 - xD) + color100.z * xD;
+        color00.w = color000.w * (1 - xD) + color100.w * xD;
+
+        color01.x = color001.x * (1 - xD) + color101.x * xD;
+        color01.y = color001.y * (1 - xD) + color101.y * xD;
+        color01.z = color001.z * (1 - xD) + color101.z * xD;
+        color01.w = color001.w * (1 - xD) + color101.w * xD;
+
+        color10.x = color010.x * (1 - xD) + color110.x * xD;
+        color10.y = color010.y * (1 - xD) + color110.y * xD;
+        color10.z = color010.z * (1 - xD) + color110.z * xD;
+        color10.w = color010.w * (1 - xD) + color110.w * xD;
+
+        color11.x = color011.x * (1 - xD) + color111.x * xD;
+        color11.y = color011.y * (1 - xD) + color111.y * xD;
+        color11.z = color011.z * (1 - xD) + color111.z * xD;
+        color11.w = color011.w * (1 - xD) + color111.w * xD;
 
 
+        float4 color0, color1;
 
-        color.x =  (1 - x) * (1 - y) * (1 - z) * color000.x +
-                        (1 - x) * (1 - y) * (z) * color001.x +
-                        (1 - x) * (y) * (1 - z) * color010.x +
-                        (1 - x) * (y) * (z) * color011.x +
-                        (x) * (1 - y) * (1 - z) * color100.x +
-                        (x) * (1 - y) * (z) * color101.x +
-                        (x) * (y) * (1 - z) * color110.x +
-                        (x) * (y) * (z) * color111.x;
+        color0.x = color00.x * (1 - yD) + color10.x * yD;
+        color0.y = color00.y * (1 - yD) + color10.y * yD;
+        color0.z = color00.z * (1 - yD) + color10.z * yD;
+        color0.w = color00.w * (1 - yD) + color10.w * yD;
 
-        color.y =  (1 - x) * (1 - y) * (1 - z) * color000.y +
-                        (1 - x) * (1 - y) * (z) * color001.y +
-                        (1 - x) * (y) * (1 - z) * color010.y +
-                        (1 - x) * (y) * (z) * color011.y +
-                        (x) * (1 - y) * (1 - z) * color100.y +
-                        (x) * (1 - y) * (z) * color101.y +
-                        (x) * (y) * (1 - z) * color110.y +
-                        (x) * (y) * (z) * color111.y;
+        color1.x = color01.x * (1 - yD) + color11.x * yD;
+        color1.y = color01.y * (1 - yD) + color11.y * yD;
+        color1.z = color01.z * (1 - yD) + color11.z * yD;
+        color1.w = color01.w * (1 - yD) + color11.w * yD;
 
-        color.z = (1 - x) * (1 - y) * (1 - z) * color000.z +
-                       (1 - x) * (1 - y) * (z) * color001.z +
-                       (1 - x) * (y) * (1 - z) * color010.z +
-                       (1 - x) * (y) * (z) * color011.z +
-                       (x) * (1 - y) * (1 - z) * color100.z +
-                       (x) * (1 - y) * (z) * color101.z +
-                       (x) * (y) * (1 - z) * color110.z +
-                       (x) * (y) * (z) * color111.z;
+        float4 color;
 
-        color.w = (1 - x) * (1 - y) * (1 - z) * color000.w +
-                       (1 - x) * (1 - y) * (z) * color001.w +
-                       (1 - x) * (y) * (1 - z) * color010.w +
-                       (1 - x) * (y) * (z) * color011.w +
-                       (x) * (1 - y) * (1 - z) * color100.w +
-                       (x) * (1 - y) * (z) * color101.w +
-                       (x) * (y) * (1 - z) * color110.w +
-                       (x) * (y) * (z) * color111.w;
+        color.x = color0.x * (1 - zD) + color1.x * zD;
+        color.y = color0.y * (1 - zD) + color1.y * zD;
+        color.z = color0.z * (1 - zD) + color1.z * zD;
+        color.w = color0.w * (1 - zD) + color1.w * zD;
 
         return color;
     }
     else{
-        return sampleAt(index);
+        return sampleAt(index0);
     }
 }

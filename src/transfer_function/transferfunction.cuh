@@ -64,7 +64,7 @@ namespace transfer_function {
 		private:
             __host__ __device__ float4 nearestColorAt(const float3& pos) const;
 
-            __host__ __device__ float4 trilinearColorAt(const float3& pos) const;
+            __host__ __device__ float4 trilinearColorAt(const float3& p) const;
 
             __host__ __device__ float3 blinnPhongIllum(const float3 &pos, const float3 &lightPos, const Illumination &illumination) const;
 
