@@ -66,8 +66,9 @@ namespace transfer_function {
 
             __host__ __device__ float4 trilinearColorAt(const float3& p) const;
 
-            __host__ __device__ float3 blinnPhongIllum(const float3 &pos, const float3 &lightPos, const Illumination &illumination) const;
+            __host__ __device__ float3 blinnPhongIllum(const float3& pos, const float3 &lightPos, const Illumination &illum, const transfer_function::Interpolation& interpolation) const;
 
+            __host__ __device__ float3 calcNormal(const float3 &pos, const transfer_function::Interpolation& interpolation) const;
 
 			uchar4* m_colors;
 			float3* m_normals;

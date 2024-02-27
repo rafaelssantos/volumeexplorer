@@ -74,7 +74,7 @@ __host__ __device__ float4 TransferFunction::colorAt(const float3& pos, const fl
     }
 
     if (illum.enabled){
-        float3 shading = blinnPhongIllum(pos, lightPos, illum);
+        float3 shading = blinnPhongIllum(pos, lightPos, illum, interpolation);
 
         color.x = fminf(1.0f, color.x * shading.x + color.x * shading.y + shading.z);
         color.y = fminf(1.0f, color.y * shading.x + color.y * shading.y + shading.z);
@@ -117,10 +117,8 @@ __host__ __device__ float4 TransferFunction::sampleAt(size_t index) const {
 
 
 
-__host__ __device__ float3 TransferFunction::blinnPhongIllum(const float3& pos, const float3& lightPos, const Illumination &illumination) const {
-    int3 index3 = roundPosToIndex(pos);
-
-    float3 normal = *(m_normals + index3toIndex(index3));
+__host__ __device__ float3 TransferFunction::blinnPhongIllum(const float3& pos, const float3& lightPos, const Illumination &illum, const Interpolation &interpolation) const {
+    float3 normal = calcNormal(pos, interpolation);
 
     float3 lightDir;
     lightDir.x = (lightPos.x - pos.x);
@@ -136,11 +134,9 @@ __host__ __device__ float3 TransferFunction::blinnPhongIllum(const float3& pos, 
 
 
 
-    float ambient = illumination.ambientK;
-    float diffuse = illumination.diffuseK * fmaxf(QuaternionCalculator::dotProduct(lightDir, normal), 0.0f);
-    float specular = illumination.specularK * fmaxf(QuaternionCalculator::dotProduct(halfwayDir, normal), 0.0f);
-
-
+    float ambient = illum.ambientK;
+    float diffuse = illum.diffuseK * fmaxf(QuaternionCalculator::dotProduct(lightDir, normal), 0.0f);
+    float specular = illum.specularK * fmaxf(QuaternionCalculator::dotProduct(halfwayDir, normal), 0.0f);
 
     float3 light;
 
@@ -149,7 +145,74 @@ __host__ __device__ float3 TransferFunction::blinnPhongIllum(const float3& pos, 
     light.z = specular;
 
     return light;
+}
 
+
+
+float3 TransferFunction::calcNormal(const float3& pos, const Interpolation &interpolation) const {
+    float3 normal;
+
+    int3 index0 = floorPosToIndex(pos);
+    int3 index1 = {index0.x + 1, index0.y + 1, index0.z + 1};
+
+    if(interpolation == Interpolation::TRILINEAR && isIndex3In(index1)){
+        float xD, yD, zD;
+
+        xD = (pos.x - index0.x * spacing().x) / spacing().x;
+        yD = (pos.y - index0.y * spacing().y) / spacing().y;
+        zD = (pos.z - index0.z * spacing().z) / spacing().z;
+
+
+        float3 normal000, normal001, normal010, normal011, normal100, normal101, normal110, normal111;
+
+        normal000 = *(m_normals + index3toIndex(index0.x, index0.y, index0.z));
+        normal001 = *(m_normals + index3toIndex(index0.x, index0.y, index1.z));
+        normal010 = *(m_normals + index3toIndex(index0.x, index1.y, index0.z));
+        normal011 = *(m_normals + index3toIndex(index0.x, index1.y, index1.z));
+        normal100 = *(m_normals + index3toIndex(index1.x, index0.y, index0.z));
+        normal101 = *(m_normals + index3toIndex(index1.x, index0.y, index1.z));
+        normal110 = *(m_normals + index3toIndex(index1.x, index1.y, index0.z));
+        normal111 = *(m_normals + index3toIndex(index1.x, index1.y, index1.z));
+
+
+        float3 normal00, normal01, normal10, normal11;
+
+        normal00.x = normal000.x * (1 - xD) + normal100.x * xD;
+        normal00.y = normal000.y * (1 - xD) + normal100.y * xD;
+        normal00.z = normal000.z * (1 - xD) + normal100.z * xD;
+
+        normal01.x = normal001.x * (1 - xD) + normal101.x * xD;
+        normal01.y = normal001.y * (1 - xD) + normal101.y * xD;
+        normal01.z = normal001.z * (1 - xD) + normal101.z * xD;
+
+        normal10.x = normal010.x * (1 - xD) + normal110.x * xD;
+        normal10.y = normal010.y * (1 - xD) + normal110.y * xD;
+        normal10.z = normal010.z * (1 - xD) + normal110.z * xD;
+
+        normal11.x = normal011.x * (1 - xD) + normal111.x * xD;
+        normal11.y = normal011.y * (1 - xD) + normal111.y * xD;
+        normal11.z = normal011.z * (1 - xD) + normal111.z * xD;
+
+
+        float3 normal0, normal1;
+
+        normal0.x = normal00.x * (1 - yD) + normal10.x * yD;
+        normal0.y = normal00.y * (1 - yD) + normal10.y * yD;
+        normal0.z = normal00.z * (1 - yD) + normal10.z * yD;
+
+        normal1.x = normal01.x * (1 - yD) + normal11.x * yD;
+        normal1.y = normal01.y * (1 - yD) + normal11.y * yD;
+        normal1.z = normal01.z * (1 - yD) + normal11.z * yD;
+
+        normal.x = normal0.x * (1 - zD) + normal1.x * zD;
+        normal.y = normal0.y * (1 - zD) + normal1.y * zD;
+        normal.z = normal0.z * (1 - zD) + normal1.z * zD;
+    }
+    else{
+        normal = *(m_normals + index3toIndex(roundPosToIndex(pos)));
+    }
+
+    return normal;
 }
 
 
@@ -244,7 +307,7 @@ __host__ __device__ float4 TransferFunction::trilinearColorAt(const float3& p) c
     int3 index0 = floorPosToIndex(p);
     int3 index1 = {index0.x + 1, index0.y + 1, index0.z + 1};
 
-    if(isIndex3In(index0) && isIndex3In(index1)){
+    if(isIndex3In(index1)){
         float xD, yD, zD;
 
         xD = (p.x - index0.x * spacing().x) / spacing().x;
