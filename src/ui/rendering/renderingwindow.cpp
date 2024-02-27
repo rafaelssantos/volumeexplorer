@@ -25,6 +25,7 @@ RenderingWindow::RenderingWindow(QWidget *parent) : QMainWindow(parent), m_ui(ne
 
 RenderingWindow::~RenderingWindow() {
     delete m_ui;
+    m_ui = nullptr;
 }
 
 

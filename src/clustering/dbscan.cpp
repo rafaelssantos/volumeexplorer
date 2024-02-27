@@ -193,6 +193,7 @@ void DBSCAN::mergeClustersDFS(const DBSCANGrid& grid, float eps, int cellIndex, 
 	}
 
 	delete[] features.data;
+    features.data = nullptr;
 }
 
 
@@ -216,11 +217,14 @@ bool DBSCAN::cellsMustMerged(cvflann::KDTreeSingleIndex<cvflann::L2_Simple<float
 				find = true;
 			}
 			delete[] indices.data;
+            indices.data = nullptr;
 			delete[] dists.data;
+            dists.data = nullptr;
 		}
 	}
 
 	delete[] query.data;
+    query.data = nullptr;
 
 	return find;
 }

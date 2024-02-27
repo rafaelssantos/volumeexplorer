@@ -24,6 +24,7 @@ TFDesignerWindow::TFDesignerWindow(QWidget *parent) : QMainWindow(parent), m_ui(
 
 TFDesignerWindow::~TFDesignerWindow(){
     delete m_ui;
+    m_ui = nullptr;
 }
 
 

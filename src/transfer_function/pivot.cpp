@@ -27,7 +27,9 @@ Pivot::Pivot() {
 
 Pivot::~Pivot() {
 	delete m_voxelIndices;
+    m_voxelIndices = nullptr;
 	delete m_group;
+    m_group = nullptr;
 }
 
 

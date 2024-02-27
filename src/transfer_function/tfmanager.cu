@@ -80,6 +80,9 @@ std::pair<TransferFunction*, TransferFunction*> TransferFunctionManager::build(c
 void TransferFunctionManager::free(std::pair<TransferFunction*, TransferFunction*> transferFunc) const {
     TFMemManager::instance().freeHost(transferFunc.first);
     TFMemManager::instance().freeDevice(transferFunc.second);
+    transferFunc.first = nullptr;
+    transferFunc.second = nullptr;
+
 }
 
 

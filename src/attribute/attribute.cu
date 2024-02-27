@@ -41,6 +41,7 @@ vector<float>* Attribute::extract(const Volume* volume, size_t voxelCount, dim3 
 	}
 
 	delete hostVectorData;
+    hostVectorData = nullptr;
 
 	return data;
 }

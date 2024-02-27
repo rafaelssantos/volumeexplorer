@@ -27,9 +27,8 @@ set<int> *SparseSpatialSelection::exec(const vector<vector<float> >& instances, 
 	float maxDist;
 	set<int> *pivots = nullptr;
 
-	maxDist = calcMaxDistance(instances, indices) * distFactor;
 
-	delete pivots;
+    maxDist = calcMaxDistance(instances, indices) * distFactor;
 	pivots = new set<int>();
 	pivots->insert(*(indices.begin()));
 

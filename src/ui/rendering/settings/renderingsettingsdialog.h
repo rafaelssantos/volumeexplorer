@@ -43,7 +43,7 @@ protected:
 
 
 private:
-    Ui::RenderingSettingsDialog *ui;
+    Ui::RenderingSettingsDialog *m_ui;
 
 
 

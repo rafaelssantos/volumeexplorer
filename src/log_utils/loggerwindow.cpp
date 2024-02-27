@@ -11,6 +11,7 @@ LoggerWindow::LoggerWindow(QWidget *parent) : QMainWindow(parent), m_ui(new Ui::
 
 LoggerWindow::~LoggerWindow() {
     delete m_ui;
+    m_ui = nullptr;
 }
 
 

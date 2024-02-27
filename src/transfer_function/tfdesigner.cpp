@@ -39,6 +39,7 @@ void TFDesigner::execDimReduction(const Volume& volume, vector<vector<float>* >&
 	restoreDefaultColor(volume);
 
 	delete normalizedData;
+    normalizedData = nullptr;
 }
 
 
@@ -49,6 +50,7 @@ void TFDesigner::exeClustering(const Volume& volume, float eps, int minPoints, f
 	eps = eps * normalizationRange;
 
 	delete m_clusters;
+    m_clusters = nullptr;
 	m_clusters = m_dbscanAlgorithm.exec(volume, *m_dimReducedData, eps, minPoints);
 
 	delete m_voxelsPerCluster;

@@ -28,6 +28,7 @@ VoxelDialog::VoxelDialog(QWidget *parent) :  QDialog(parent), m_ui(new Ui::Voxel
 
 VoxelDialog::~VoxelDialog() {
 	delete m_ui;
+    m_ui = nullptr;
 }
 
 

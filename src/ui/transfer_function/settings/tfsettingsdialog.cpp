@@ -21,6 +21,7 @@ TFSettingsDialog::TFSettingsDialog(QWidget *parent) : QDialog(parent), m_ui(new 
 
 TFSettingsDialog::~TFSettingsDialog(){
     delete m_ui;
+    m_ui = nullptr;
 }
 
 

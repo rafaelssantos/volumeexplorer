@@ -12,8 +12,8 @@ using namespace settings;
 
 
 
-RenderingSettingsDialog::RenderingSettingsDialog(QWidget *parent) : QDialog(parent), ui(new Ui::RenderingSettingsDialog) {
-    ui->setupUi(this);
+RenderingSettingsDialog::RenderingSettingsDialog(QWidget *parent) : QDialog(parent), m_ui(new Ui::RenderingSettingsDialog) {
+    m_ui->setupUi(this);
     initComponents();
 }
 
@@ -23,7 +23,8 @@ RenderingSettingsDialog::RenderingSettingsDialog(QWidget *parent) : QDialog(pare
 
 
 RenderingSettingsDialog::~RenderingSettingsDialog() {
-    delete ui;
+    delete m_ui;
+    m_ui = nullptr;
 }
 
 
@@ -32,25 +33,25 @@ RenderingSettingsDialog::~RenderingSettingsDialog() {
 
 
 void RenderingSettingsDialog::slotEmitSignalAccepted() {
-    dim3 blockDim = {static_cast<unsigned>(ui->sbBlockDimX->value()), static_cast<unsigned>(ui->sbBlockDimY->value()), static_cast<unsigned>(ui->sbBlockDimZ->value())};
-    bool devSyncronize = ui->cbDevSyncronize->isChecked();
+    dim3 blockDim = {static_cast<unsigned>(m_ui->sbBlockDimX->value()), static_cast<unsigned>(m_ui->sbBlockDimY->value()), static_cast<unsigned>(m_ui->sbBlockDimZ->value())};
+    bool devSyncronize = m_ui->cbDevSyncronize->isChecked();
 
-    float maxOpacity = static_cast<float>(ui->sbMaxOpacity->value());
+    float maxOpacity = static_cast<float>(m_ui->sbMaxOpacity->value());
 
-    float step = static_cast<float>(ui->sbStepLength->value());
-    unsigned maxNumberOfSteps = static_cast<unsigned>(ui->sbMaxNumberOfSteps->value());
+    float step = static_cast<float>(m_ui->sbStepLength->value());
+    unsigned maxNumberOfSteps = static_cast<unsigned>(m_ui->sbMaxNumberOfSteps->value());
 
-    float zoomIncrement = static_cast<float>(ui->sbZoomIncrement->value());
-    float rotationDegree = static_cast<float>(ui->sbRotationDegree->value());
+    float zoomIncrement = static_cast<float>(m_ui->sbZoomIncrement->value());
+    float rotationDegree = static_cast<float>(m_ui->sbRotationDegree->value());
 
-    bool illuminationEnabled = ui->cbEnabled->isChecked();
-    float ambient = ui->sbAmbient->value() / 100.0f;
-    float diffuse = ui->sbDiffuse->value() / 100.0f;
-    float specular = ui->sbSpecular->value() / 100.0f;
-    int shininness = ui->spShininess->value();
+    bool illuminationEnabled = m_ui->cbEnabled->isChecked();
+    float ambient = m_ui->sbAmbient->value() / 100.0f;
+    float diffuse = m_ui->sbDiffuse->value() / 100.0f;
+    float specular = m_ui->sbSpecular->value() / 100.0f;
+    int shininness = m_ui->spShininess->value();
 
     Interpolation interpolation;
-    if (ui->rbTrilinear->isChecked()) {
+    if (m_ui->rbTrilinear->isChecked()) {
         interpolation = Interpolation::TRILINEAR;
     }
     else {
@@ -73,17 +74,17 @@ void RenderingSettingsDialog::slotEmitSignalRejected() {
 
 
 void RenderingSettingsDialog::slotIlluminationEnabled(bool enabled) {
-    ui->lblAmbient->setEnabled(enabled);
-    ui->lblDiffuse->setEnabled(enabled);
-    ui->lblSpecular->setEnabled(enabled);
-    ui->lblShininess->setEnabled(enabled);
-    ui->sdAmbient->setEnabled(enabled);
-    ui->sdDiffuse->setEnabled(enabled);
-    ui->sdSpecular->setEnabled(enabled);
-    ui->spShininess->setEnabled(enabled);
-    ui->sbAmbient->setEnabled(enabled);
-    ui->sbDiffuse->setEnabled(enabled);
-    ui->sbSpecular->setEnabled(enabled);
+    m_ui->lblAmbient->setEnabled(enabled);
+    m_ui->lblDiffuse->setEnabled(enabled);
+    m_ui->lblSpecular->setEnabled(enabled);
+    m_ui->lblShininess->setEnabled(enabled);
+    m_ui->sdAmbient->setEnabled(enabled);
+    m_ui->sdDiffuse->setEnabled(enabled);
+    m_ui->sdSpecular->setEnabled(enabled);
+    m_ui->spShininess->setEnabled(enabled);
+    m_ui->sbAmbient->setEnabled(enabled);
+    m_ui->sbDiffuse->setEnabled(enabled);
+    m_ui->sbSpecular->setEnabled(enabled);
 }
 
 
@@ -98,18 +99,18 @@ void RenderingSettingsDialog::initComponents() {
     flags |= Qt::WindowCloseButtonHint;
     setWindowFlags(flags);
 
-    connect(ui->pbApply, SIGNAL(clicked()), this, SLOT(slotEmitSignalAccepted()));
-    connect(ui->pbCancel, SIGNAL(clicked()), this, SLOT(slotEmitSignalRejected()));
-    connect(ui->cbEnabled, SIGNAL(toggled(bool)), this, SLOT(slotIlluminationEnabled(bool)));
+    connect(m_ui->pbApply, SIGNAL(clicked()), this, SLOT(slotEmitSignalAccepted()));
+    connect(m_ui->pbCancel, SIGNAL(clicked()), this, SLOT(slotEmitSignalRejected()));
+    connect(m_ui->cbEnabled, SIGNAL(toggled(bool)), this, SLOT(slotIlluminationEnabled(bool)));
     connect(this, SIGNAL(rejected()), this, SLOT(slotEmitSignalRejected()));
 
-    connect(ui->sdAmbient, SIGNAL(valueChanged(int)), ui->sbAmbient, SLOT(setValue(int)));
-    connect(ui->sdDiffuse, SIGNAL(valueChanged(int)), ui->sbDiffuse, SLOT(setValue(int)));
-    connect(ui->sdSpecular, SIGNAL(valueChanged(int)), ui->sbSpecular, SLOT(setValue(int)));
+    connect(m_ui->sdAmbient, SIGNAL(valueChanged(int)), m_ui->sbAmbient, SLOT(setValue(int)));
+    connect(m_ui->sdDiffuse, SIGNAL(valueChanged(int)), m_ui->sbDiffuse, SLOT(setValue(int)));
+    connect(m_ui->sdSpecular, SIGNAL(valueChanged(int)), m_ui->sbSpecular, SLOT(setValue(int)));
 
-    connect(ui->sbAmbient, SIGNAL(valueChanged(int)), ui->sdAmbient, SLOT(setValue(int)));
-    connect(ui->sbDiffuse, SIGNAL(valueChanged(int)), ui->sdDiffuse, SLOT(setValue(int)));
-    connect(ui->sbSpecular, SIGNAL(valueChanged(int)), ui->sdSpecular, SLOT(setValue(int)));
+    connect(m_ui->sbAmbient, SIGNAL(valueChanged(int)), m_ui->sdAmbient, SLOT(setValue(int)));
+    connect(m_ui->sbDiffuse, SIGNAL(valueChanged(int)), m_ui->sdDiffuse, SLOT(setValue(int)));
+    connect(m_ui->sbSpecular, SIGNAL(valueChanged(int)), m_ui->sdSpecular, SLOT(setValue(int)));
 }
 
 
@@ -118,27 +119,27 @@ void RenderingSettingsDialog::initComponents() {
 
 
 void RenderingSettingsDialog::slotSetFields(dim3 blockDim, bool devSyncronize, float zoomIncrement, float rotationDegree, float maxOpacity, float step, unsigned maxNumberOfSteps, Interpolation filterType, bool illuminationEnabled, float ambient, float diffuse, float specular, int power) {
-    ui->sbBlockDimX->setValue(static_cast<int>(blockDim.x));
-    ui->sbBlockDimY->setValue(static_cast<int>(blockDim.y));
-    ui->sbBlockDimZ->setValue(static_cast<int>(blockDim.z));
-    ui->cbDevSyncronize->setChecked(devSyncronize);
-    ui->sbZoomIncrement->setValue(zoomIncrement);
+    m_ui->sbBlockDimX->setValue(static_cast<int>(blockDim.x));
+    m_ui->sbBlockDimY->setValue(static_cast<int>(blockDim.y));
+    m_ui->sbBlockDimZ->setValue(static_cast<int>(blockDim.z));
+    m_ui->cbDevSyncronize->setChecked(devSyncronize);
+    m_ui->sbZoomIncrement->setValue(zoomIncrement);
 
-    ui->sbRotationDegree->setValue(rotationDegree);
-    ui->sbMaxOpacity->setValue(maxOpacity);
-    ui->sbMaxNumberOfSteps->setValue(static_cast<int>(maxNumberOfSteps));
-    ui->sbStepLength->setValue(step);
-    ui->cbEnabled->setChecked(illuminationEnabled);
+    m_ui->sbRotationDegree->setValue(rotationDegree);
+    m_ui->sbMaxOpacity->setValue(maxOpacity);
+    m_ui->sbMaxNumberOfSteps->setValue(static_cast<int>(maxNumberOfSteps));
+    m_ui->sbStepLength->setValue(step);
+    m_ui->cbEnabled->setChecked(illuminationEnabled);
 
-    ui->sdAmbient->setValue(static_cast<int>(100.0f * ambient));
-    ui->sdDiffuse->setValue(static_cast<int>(100.0f * diffuse));
-    ui->sdSpecular->setValue(static_cast<int>(100.0f * specular));
-    ui->spShininess->setValue(static_cast<int>(power));
+    m_ui->sdAmbient->setValue(static_cast<int>(100.0f * ambient));
+    m_ui->sdDiffuse->setValue(static_cast<int>(100.0f * diffuse));
+    m_ui->sdSpecular->setValue(static_cast<int>(100.0f * specular));
+    m_ui->spShininess->setValue(static_cast<int>(power));
 
     if (filterType == Interpolation::TRILINEAR) {
-        ui->rbTrilinear->setChecked(true);
+        m_ui->rbTrilinear->setChecked(true);
     }
     else {
-        ui->rbNearest->setChecked(true);
+        m_ui->rbNearest->setChecked(true);
     }
 }

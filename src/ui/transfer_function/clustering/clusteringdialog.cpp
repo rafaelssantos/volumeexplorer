@@ -20,6 +20,7 @@ ClusteringDialog::ClusteringDialog(QWidget *parent) : QDialog(parent), m_ui(new 
 
 ClusteringDialog::~ClusteringDialog(){
     delete m_ui;
+    m_ui = nullptr;
 }
 
 

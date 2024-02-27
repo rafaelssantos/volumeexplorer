@@ -25,6 +25,7 @@ AttributeDialog::AttributeDialog(QWidget *parent) : QDialog(parent), m_ui(new Ui
 AttributeDialog::~AttributeDialog(){
 	m_checkboxes.clear();
 	delete m_ui;
+    m_ui = nullptr;
 }
 
 
