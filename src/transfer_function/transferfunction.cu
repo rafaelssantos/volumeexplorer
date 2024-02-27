@@ -63,10 +63,10 @@ __host__ __device__ float4 TransferFunction::colorAt(float x, float y, float z, 
 
 
 
-__host__ __device__ float4 TransferFunction::colorAt(const float3& pos, const float3& lightPos, const Illumination &illum, const Interpolation &interpSpecs) const {
+__host__ __device__ float4 TransferFunction::colorAt(const float3& pos, const float3& lightPos, const Illumination &illum, const Interpolation &interpolation) const {
     float4 color;
 
-    if(interpSpecs == Interpolation::TRILINEAR) {
+    if(interpolation == Interpolation::TRILINEAR) {
         color = trilinearColorAt(pos);
     }
     else {

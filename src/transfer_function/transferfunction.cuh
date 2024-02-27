@@ -35,7 +35,7 @@ namespace transfer_function {
 
             __host__ __device__ float4 colorAt(float x, float y, float z, const float3& lightPos, const transfer_function::Illumination& illumination, const transfer_function::Interpolation& filterType) const;
 
-            __host__ __device__ float4 colorAt(const float3& pos, const float3& lightPos, const transfer_function::Illumination& illumSpecs, const transfer_function::Interpolation& interpSpecs) const;
+            __host__ __device__ float4 colorAt(const float3& pos, const float3& lightPos, const transfer_function::Illumination& illumSpecs, const transfer_function::Interpolation& interpolation) const;
 
 			__host__ __device__ float4 sampleAt(int x,  int y, int z) const;
 
