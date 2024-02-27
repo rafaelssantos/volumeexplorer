@@ -21,9 +21,9 @@ RenderingSettings::RenderingSettings() {
     m_HQBlockDim = m_blockDim = {192, 1, 1};
     m_HQInterpolation = m_interpolation = Interpolation::NEAREST;
 
-    m_HQIllumination.ambientPower = m_illumination.ambientPower = 0.1f;
-    m_HQIllumination.diffusePower = m_illumination.diffusePower = 0.5;
-    m_HQIllumination.specularPower = m_illumination.specularPower = 0.4f;
+    m_HQIllumination.ambientK = m_illumination.ambientK = 0.1f;
+    m_HQIllumination.diffuseK = m_illumination.diffuseK = 0.5;
+    m_HQIllumination.specularK = m_illumination.specularK = 0.4f;
     m_HQIllumination.shininess = m_illumination.shininess = 32;
     m_HQIllumination.enabled = m_illumination.enabled = false;
 
@@ -69,9 +69,9 @@ void RenderingSettings::load() {
     m_devSyncronize = settings.value("devSyncronize", false).toBool();
 
     m_illumination.enabled = settings.value("illuminationEnabled", false).toBool();
-    m_illumination.ambientPower = settings.value("ambientPower", 0.1f).toFloat();
-    m_illumination.diffusePower = settings.value("diffusePower", 0.5f).toFloat();
-    m_illumination.specularPower = settings.value("specularPower", 0.4f).toFloat();
+    m_illumination.ambientK = settings.value("ambientK", 0.1f).toFloat();
+    m_illumination.diffuseK = settings.value("diffuseK", 0.5f).toFloat();
+    m_illumination.specularK = settings.value("specularK", 0.4f).toFloat();
     m_illumination.shininess = settings.value("shininess", 32).toInt();
 
     m_interpolation = static_cast<Interpolation>(settings.value("illumination", 0).toInt());
@@ -91,9 +91,9 @@ void RenderingSettings::load() {
 
 
     m_HQIllumination.enabled = settings.value("HQIlluminationEnabled", false).toBool();
-    m_HQIllumination.ambientPower = settings.value("HQambientPower", 0.1f).toFloat();
-    m_HQIllumination.diffusePower = settings.value("HQdiffusePower", 0.5f).toFloat();
-    m_HQIllumination.specularPower = settings.value("HQspecularPower", 0.4f).toFloat();
+    m_HQIllumination.ambientK = settings.value("HQambientK", 0.1f).toFloat();
+    m_HQIllumination.diffuseK = settings.value("HQdiffuseK", 0.5f).toFloat();
+    m_HQIllumination.specularK = settings.value("HQspecularK", 0.4f).toFloat();
     m_HQIllumination.shininess = settings.value("HQshininess", 32).toInt();
 
     m_HQInterpolation = static_cast<Interpolation>(settings.value("HQillumination", 0).toInt());
@@ -122,9 +122,9 @@ void RenderingSettings::save() {
 
 
     settings.setValue("illuminationEnabled", m_illumination.enabled);
-    settings.setValue("ambientPower", m_illumination.ambientPower);
-    settings.setValue("diffusePower", m_illumination.diffusePower);
-    settings.setValue("specularPower", m_illumination.specularPower);
+    settings.setValue("ambientK", m_illumination.ambientK);
+    settings.setValue("diffuseK", m_illumination.diffuseK);
+    settings.setValue("specularK", m_illumination.specularK);
     settings.setValue("shininess", m_illumination.shininess);
     settings.setValue("illumination", m_interpolation);
 
@@ -143,9 +143,9 @@ void RenderingSettings::save() {
 
 
     settings.setValue("HQIlluminationEnabled", m_HQIllumination.enabled);
-    settings.setValue("HQambientPower", m_HQIllumination.ambientPower);
-    settings.setValue("HQdiffusePower", m_HQIllumination.diffusePower);
-    settings.setValue("HQspecularPower", m_HQIllumination.specularPower);
+    settings.setValue("HQambientK", m_HQIllumination.ambientK);
+    settings.setValue("HQdiffuseK", m_HQIllumination.diffuseK);
+    settings.setValue("HQspecularK", m_HQIllumination.specularK);
     settings.setValue("HQshininess", m_HQIllumination.shininess);
     settings.setValue("HQillumination", m_HQInterpolation);
 
@@ -381,12 +381,12 @@ bool RenderingSettings::illumEnabled() const {
 
 
 
-void RenderingSettings::setIllumAmbientPower(float power) {
+void RenderingSettings::setIllumAmbientK(float k) {
     if(m_HQEnabled){
-        m_HQIllumination.ambientPower = power;
+        m_HQIllumination.ambientK = k;
     }
     else{
-        m_illumination.ambientPower = power;
+        m_illumination.ambientK = k;
     }
 }
 
@@ -394,12 +394,12 @@ void RenderingSettings::setIllumAmbientPower(float power) {
 
 
 
-float RenderingSettings::illumAmbientPower() const {
+float RenderingSettings::illumAmbientK() const {
     if(m_HQEnabled){
-        return m_HQIllumination.ambientPower;
+        return m_HQIllumination.ambientK;
     }
     else{
-        return m_illumination.ambientPower;
+        return m_illumination.ambientK;
     }
 }
 
@@ -407,12 +407,12 @@ float RenderingSettings::illumAmbientPower() const {
 
 
 
-void RenderingSettings::setIllumDiffusePower(float power) {
+void RenderingSettings::setIllumDiffuseK(float k) {
     if(m_HQEnabled){
-        m_HQIllumination.diffusePower = power;
+        m_HQIllumination.diffuseK = k;
     }
     else{
-        m_illumination.diffusePower = power;
+        m_illumination.diffuseK = k;
     }
 }
 
@@ -420,12 +420,12 @@ void RenderingSettings::setIllumDiffusePower(float power) {
 
 
 
-float RenderingSettings::illumDiffusePower() const {
+float RenderingSettings::illumDiffuseK() const {
     if(m_HQEnabled){
-        return m_HQIllumination.diffusePower;
+        return m_HQIllumination.diffuseK;
     }
     else{
-        return m_illumination.diffusePower;
+        return m_illumination.diffuseK;
     }
 }
 
@@ -433,12 +433,12 @@ float RenderingSettings::illumDiffusePower() const {
 
 
 
-void RenderingSettings::setIllumSpecularPower(float power) {
+void RenderingSettings::setIllumSpecularK(float k) {
     if(m_HQEnabled){
-        m_HQIllumination.specularPower = power;
+        m_HQIllumination.specularK = k;
     }
     else{
-        m_illumination.specularPower = power;
+        m_illumination.specularK = k;
     }
 }
 
@@ -446,12 +446,12 @@ void RenderingSettings::setIllumSpecularPower(float power) {
 
 
 
-float RenderingSettings::illumSpecularPower() const {
+float RenderingSettings::illumSpecularK() const {
     if(m_HQEnabled){
-        return m_HQIllumination.specularPower;
+        return m_HQIllumination.specularK;
     }
     else{
-        return m_illumination.specularPower;
+        return m_illumination.specularK;
     }
 }
 

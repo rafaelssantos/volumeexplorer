@@ -39,9 +39,9 @@ void RenderingSettingsUiController::slotSettingsDialogAccepted(dim3 blockDim, bo
     RenderingSettings::instance().setMaxNumberOfSteps(maxNumberOfSteps);
     RenderingSettings::instance().setInterpolation(filterType);
     RenderingSettings::instance().setIllumEnabled(illuminationEnabled);
-    RenderingSettings::instance().setIllumAmbientPower(ambient);
-    RenderingSettings::instance().setIllumDiffusePower(diffuse);
-    RenderingSettings::instance().setIllumSpecularPower(specular);
+    RenderingSettings::instance().setIllumAmbientK(ambient);
+    RenderingSettings::instance().setIllumDiffuseK(diffuse);
+    RenderingSettings::instance().setIllumSpecularK(specular);
     RenderingSettings::instance().setIllumShininess(power);
     RenderingSettings::instance().save();
 }
@@ -93,9 +93,9 @@ int RenderingSettingsUiController::slotExecDialog() {
         RenderingSettings::instance().maxNumberOfSteps(),
         RenderingSettings::instance().interpolation(),
         RenderingSettings::instance().illumEnabled(),
-        RenderingSettings::instance().illumAmbientPower(),
-        RenderingSettings::instance().illumDiffusePower(),
-        RenderingSettings::instance().illumSpecularPower(),
+        RenderingSettings::instance().illumAmbientK(),
+        RenderingSettings::instance().illumDiffuseK(),
+        RenderingSettings::instance().illumSpecularK(),
         RenderingSettings::instance().illumShininess());
 
     connect(&dialog, SIGNAL(signalAccepted(dim3,bool,float,float,float,float,uint,transfer_function::Interpolation,bool,float,float,float,int)), this,

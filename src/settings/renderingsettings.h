@@ -53,17 +53,17 @@ namespace settings {
 
             bool illumEnabled() const;
 
-            void setIllumAmbientPower(float power);
+            void setIllumAmbientK(float k);
 
-            float illumAmbientPower() const;
+            float illumAmbientK() const;
 
-            void setIllumDiffusePower(float power);
+            void setIllumDiffuseK(float k);
 
-            float illumDiffusePower() const;
+            float illumDiffuseK() const;
 
-            void setIllumSpecularPower(float power);
+            void setIllumSpecularK(float k);
 
-            float illumSpecularPower() const;
+            float illumSpecularK() const;
 
             void setIllumShininess(int shininess);
 

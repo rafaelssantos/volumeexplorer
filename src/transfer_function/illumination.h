@@ -6,9 +6,9 @@
 
 namespace transfer_function {
 	struct Illumination {
-            float ambientPower;
-            float diffusePower;
-            float specularPower;
+            float ambientK;
+            float diffuseK;
+            float specularK;
             int shininess;
 			bool enabled;
 	};
