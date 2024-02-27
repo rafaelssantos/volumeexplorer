@@ -63,7 +63,7 @@ __host__ __device__ float4 TransferFunction::colorAt(float x, float y, float z, 
 
 
 
-__host__ __device__ float4 TransferFunction::colorAt(const float3& pos, const float3& lightPos, const Illumination &illumSpecs, const Interpolation &interpSpecs) const {
+__host__ __device__ float4 TransferFunction::colorAt(const float3& pos, const float3& lightPos, const Illumination &illum, const Interpolation &interpSpecs) const {
     float4 color;
 
     if(interpSpecs == Interpolation::TRILINEAR) {
@@ -73,12 +73,12 @@ __host__ __device__ float4 TransferFunction::colorAt(const float3& pos, const fl
         color = nearestColorAt(pos);
     }
 
-    if (illumSpecs.enabled){
-        float3 illum = blinnPhongIllum(pos, lightPos, illumSpecs);
+    if (illum.enabled){
+        float3 shading = blinnPhongIllum(pos, lightPos, illum);
 
-        color.x = fminf(1.0f, color.x * illum.x + color.x * illum.y + illum.z);
-        color.y = fminf(1.0f, color.y * illum.x + color.y * illum.y + illum.z);
-        color.z = fminf(1.0f, color.z * illum.x + color.z * illum.y + illum.z);
+        color.x = fminf(1.0f, color.x * shading.x + color.x * shading.y + shading.z);
+        color.y = fminf(1.0f, color.y * shading.x + color.y * shading.y + shading.z);
+        color.z = fminf(1.0f, color.z * shading.x + color.z * shading.y + shading.z);
     }
 
 
@@ -128,15 +128,18 @@ __host__ __device__ float3 TransferFunction::blinnPhongIllum(const float3& pos, 
     lightDir.z = (lightPos.z - pos.z);
     lightDir = QuaternionCalculator::normalize(lightDir);
 
-    float  diffuseLight = fmaxf(QuaternionCalculator::dotProduct(normal, lightDir), 0.0f);
+    float3 halfwayDir;
+    halfwayDir.x = lightPos.x + pos.x;
+    halfwayDir.y = lightPos.y + pos.y;
+    halfwayDir.z = lightPos.z + pos.z;
+    halfwayDir= QuaternionCalculator::normalize(halfwayDir);
 
-    float ambient = illumination.ambientPower;
-    float diffuse = illumination.diffusePower * diffuseLight;
-    float specular = 0.0f;
 
-    if(diffuseLight > 0){
-        specular = illumination.specularPower * powf(diffuseLight, illumination.shininess);
-    }
+
+    float ambient = illumination.ambientK;
+    float diffuse = illumination.diffuseK * fmaxf(QuaternionCalculator::dotProduct(lightDir, normal), 0.0f);
+    float specular = illumination.specularK * fmaxf(QuaternionCalculator::dotProduct(halfwayDir, normal), 0.0f);
+
 
 
     float3 light;
