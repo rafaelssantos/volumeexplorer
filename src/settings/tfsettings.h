@@ -61,10 +61,6 @@ private:
     float m_selectedOpacity;
     float m_unselectedOpacity;
     bool m_pivotLabelEnabled;
-
-private:
-    TFSettings(const TFSettings &) = delete;
-    TFSettings &operator=(const TFSettings &) = delete;
 };
 
 

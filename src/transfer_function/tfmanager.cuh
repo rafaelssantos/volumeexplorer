@@ -31,13 +31,7 @@ public:
 private:
 	TransferFunctionManager();
 
-	virtual ~TransferFunctionManager();
-
-
-
-private:
-	TransferFunctionManager(const TransferFunctionManager &) = delete;
-    void operator=(const TransferFunctionManager &) = delete;
+    virtual ~TransferFunctionManager();
 };
 
 }

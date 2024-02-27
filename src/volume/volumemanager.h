@@ -28,11 +28,6 @@ class VolumeManager {
         VolumeManager();
 
         virtual ~VolumeManager();
-
-
-    private:
-        VolumeManager(const VolumeManager&) = delete;
-        void operator=(const VolumeManager&) = delete;
 };
 
 

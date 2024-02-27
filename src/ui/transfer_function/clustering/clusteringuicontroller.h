@@ -37,12 +37,6 @@ private slots:
 	void sloDialogAccepted(int minPoints, float eps, float distFactor);
 
     void slotDialogRejected();
-
-
-private:
-	ClusteringUIController(const ClusteringUIController &) = delete;
-	ClusteringUIController &operator =(const ClusteringUIController &) = delete;
-
 };
 
 

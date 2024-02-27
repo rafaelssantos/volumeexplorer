@@ -28,12 +28,6 @@ class VolumeMemManager {
         virtual ~VolumeMemManager();
 
         Volume m_swapBuffer;
-
-
-
-    private:
-        VolumeMemManager(const VolumeMemManager&) = delete;
-        void operator=(const VolumeMemManager&) = delete;
 };
 
 

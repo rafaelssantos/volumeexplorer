@@ -22,12 +22,6 @@ protected:
     RainbowScaleGenerator();
 
     virtual ~RainbowScaleGenerator();
-
-
-
-private:
-    RainbowScaleGenerator(const RainbowScaleGenerator &) = delete;
-    void operator=(const RainbowScaleGenerator &) = delete;
 };
 
 

@@ -37,12 +37,6 @@ protected:
     void borderPointToNearestCluster(const DBSCANGrid &grid, float eps, int index, std::vector<int> *clusterIndices) const;
 
     float euclideanDist2(const DBSCANPoint &point1, const  DBSCANPoint& point2) const;
-
-
-
-private:
-    DBSCAN(const DBSCAN &) = delete;
-    DBSCAN &operator=(const DBSCAN &) = delete;
 };
 }
 

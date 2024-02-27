@@ -104,13 +104,6 @@ namespace settings {
             float m_HQRotationDegree;
             bool m_HQEnabled;
             bool m_HQDevSyncronize;
-
-
-
-
-		private:
-			RenderingSettings(const RenderingSettings &) = delete;
-			RenderingSettings &operator=(const RenderingSettings &) = delete;
 	};
 
 

@@ -28,11 +28,6 @@ private:
     RayCasting();
 
     virtual ~RayCasting();
-
-
-private:    //Métodos desabilitados
-    RayCasting(const RayCasting&) = delete;
-    void operator=(const RayCasting&) = delete;
 };
 
 

@@ -43,9 +43,6 @@ protected:
 
 
 private:
-    RenderingSettingsDialog(const RenderingSettingsDialog &) = delete;
-    RenderingSettingsDialog &operator=(const RenderingSettingsDialog &) = delete;
-
     Ui::RenderingSettingsDialog *ui;
 
 

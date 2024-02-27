@@ -41,9 +41,6 @@ class TFSettingsDialog : public QDialog{
 
 
     private:
-        TFSettingsDialog(const TFSettingsDialog &) = delete;
-        TFSettingsDialog &operator =(const TFSettingsDialog &) = delete;
-
         Ui::TFSettingsDialog *m_ui;
 
 

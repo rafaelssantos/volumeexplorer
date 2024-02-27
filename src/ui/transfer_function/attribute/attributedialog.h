@@ -48,10 +48,7 @@ public slots:
 
 
 private:
-	AttributeDialog(const AttributeDialog &) = delete;
-	AttributeDialog &operator =(const AttributeDialog &) = delete;
-
-	Ui::AttributeDialog *m_ui;
+    Ui::AttributeDialog *m_ui;
 	std::vector<QCheckBox *> m_checkboxes;
     std::map<int, attribute::AttributeType> m_attributeTypes;
 

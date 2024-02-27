@@ -100,11 +100,7 @@ namespace transfer_function {
 
 			std::map<int, std::set<int>> *m_voxelsPerCluster;
 
-			std::map<int, std::set<int>> *m_pivotsPerCluster;
-
-		private:
-			TFDesigner(const TFDesigner&) = delete;
-			void operator=(const TFDesigner&) = delete;
+            std::map<int, std::set<int>> *m_pivotsPerCluster;
 	};
 }
 

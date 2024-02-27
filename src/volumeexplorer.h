@@ -55,11 +55,6 @@ private:
     volume::Volume *m_devVolume;
     transfer_function::TransferFunction *m_hostTransferFunc;
     transfer_function::TransferFunction *m_devTransferFunc;
-
-
-private:
-    VolumeExplorer(const VolumeExplorer&) = delete;
-    void operator=(const VolumeExplorer&) = delete;
 };
 
 

@@ -40,9 +40,6 @@ protected:
 
 
 private:
-	VoxelDialog(const VoxelDialog &) = delete;
-	VoxelDialog &operator =(const VoxelDialog &) = delete;
-
 	Ui::VoxelDialog *m_ui;
 
 	std::string m_dirPath;

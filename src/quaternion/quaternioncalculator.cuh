@@ -63,16 +63,6 @@ protected:
     static __host__ __device__ Quaternion linearInterpolation(const Quaternion& q1, const Quaternion& q2, float t);
 
     static __host__ __device__ Quaternion angularInterpolation(const Quaternion& q1, const Quaternion& q2, float u);
-
-
-private:
-    QuaternionCalculator() = delete;
-
-    ~QuaternionCalculator() = delete;
-
-    QuaternionCalculator(const QuaternionCalculator &) = delete;
-
-    void operator=(const QuaternionCalculator &) = delete;
 };
 }
 

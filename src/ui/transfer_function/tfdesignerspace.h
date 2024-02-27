@@ -34,13 +34,6 @@ protected:
     void resizeEvent(QResizeEvent *event) override;
 
 
-
-
-private:
-	TFDesignerSpace(const TFDesignerSpace &) = delete;
-	TFDesignerSpace &operator =(const TFDesignerSpace &) = delete;
-
-
 signals:
     void signalSizeChanged(int width, int height);
 

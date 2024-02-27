@@ -55,13 +55,7 @@ private:
     rendering::image::GlPBOImage* m_devImage;
     const volume::Volume *m_devVolume;
 	const transfer_function::TransferFunction*  m_transferFunction;
-	rendering::view::Viewer m_viewer;
-
-
-
-private:
-    Render(const Render&) = delete;
-    void operator=(const Render&) = delete;
+    rendering::view::Viewer m_viewer;
 };
 
 

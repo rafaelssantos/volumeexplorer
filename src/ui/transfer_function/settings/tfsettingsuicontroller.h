@@ -22,11 +22,6 @@ private:
 
     virtual ~TFSettingsUiController();
 
-private:
-    TFSettingsUiController(const TFSettingsUiController &) = delete;
-    TFSettingsUiController &operator=(const TFSettingsUiController &) = delete;
-
-
 
 private slots:
     void slotSettingsDialogAccepted(float minDiameter, float borderWidth, float zoomIncrement, float baseOpacity, float selectedOpacity, float unselectedOpacity, bool pivotLabelEnabled);

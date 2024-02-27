@@ -44,9 +44,6 @@ private:
 
 
 private:
-	AttributeManager(const AttributeManager&) = delete;
-	void operator=(const AttributeManager&) = delete;
-
 	const volume::Volume* m_volume;
 	dim3 m_kernelBlockDim;
     std::set<AttributeType> m_availableTypes;

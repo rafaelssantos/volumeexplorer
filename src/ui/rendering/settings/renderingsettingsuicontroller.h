@@ -34,13 +34,6 @@ protected:
     virtual ~RenderingSettingsUiController();
 
 
-
-private:
-    RenderingSettingsUiController(const RenderingSettingsUiController &) = delete;
-    RenderingSettingsUiController &operator=(const RenderingSettingsUiController &) = delete;
-
-
-
 private slots:
     void slotSettingsDialogAccepted(dim3 blockDim, bool devSyncronize, float zoomIncrement, float rotationDegree, float maxOpacity, float step, unsigned maxNumberOfSteps, transfer_function::Interpolation filterType, bool illuminationEnabled, float ambient, float diffuse, float specular, int power);
 

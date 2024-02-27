@@ -13,12 +13,6 @@ public:
     static __device__ unsigned totalBlockIdx();
 
     static __device__ unsigned totalBlockDim();
-
-
-private:
-    ThreadIndexing() = delete;
-    ThreadIndexing(const ThreadIndexing &) = delete;
-    void operator=(const ThreadIndexing &) = delete;
 };
 
 

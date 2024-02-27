@@ -29,16 +29,6 @@ private:
     QFileDialog m_fileDialog;
 
 
-
-
-private:
-	AttributeUIController(const AttributeUIController &) = delete;
-	AttributeUIController &operator =(const AttributeUIController &) = delete;
-
-
-signals:
-
-
 public slots:
     int slotExecAttributeDialog();
 

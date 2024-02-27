@@ -48,13 +48,7 @@ private:
 	float m_pivotMaxChildrenCount;
 	float m_pivotMinChildrenCount;
 
-	void pivotsLimitsCalc();
-
-
-	TFDesignerUIController(const TFDesignerUIController&) = delete;
-
-	void operator=(const TFDesignerUIController&) = delete;
-
+    void pivotsLimitsCalc();
 
 
 public slots:

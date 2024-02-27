@@ -17,11 +17,6 @@ private:
     KernelDimsCalculator();
 
     virtual ~KernelDimsCalculator();
-
-
-private:
-    KernelDimsCalculator(const KernelDimsCalculator&) = delete;
-    void operator=(const KernelDimsCalculator&) = delete;
 };
 
 

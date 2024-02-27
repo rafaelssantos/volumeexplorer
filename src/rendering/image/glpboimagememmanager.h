@@ -27,12 +27,6 @@ private:
     GlPBOImageMemManager();
 
     virtual ~GlPBOImageMemManager();
-
-
-
-private:
-    GlPBOImageMemManager(const GlPBOImageMemManager&) = delete;
-    void operator=(const GlPBOImageMemManager&) = delete;
 };
 
 

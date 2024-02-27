@@ -35,12 +35,7 @@ private:
 	std::string m_dirPath;
 	float m_volumeSpacingX;
 	float m_volumeSpacingY;
-	float m_volumeSpacingZ;
-
-
-private:
-	RenderingUIController(const RenderingUIController&) = delete;
-	void operator=(const RenderingUIController&) = delete;
+    float m_volumeSpacingZ;
 
 
 

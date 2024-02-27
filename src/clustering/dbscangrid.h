@@ -56,15 +56,7 @@ private:
     int m_rows;
     int m_cols;
     std::map<int, Cell *> m_cellsSparseMatrix;
-
-
-
-private:
-    DBSCANGrid(const DBSCANGrid &) = delete;
-    DBSCANGrid &operator=(const DBSCANGrid &) = delete;
 };
-
-
 }
 
 #endif // DBSCANGRID_H

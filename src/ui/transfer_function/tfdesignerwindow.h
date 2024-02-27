@@ -96,9 +96,6 @@ class TFDesignerWindow : public QMainWindow{
 
 
 	private:
-		TFDesignerWindow(const TFDesignerWindow &) = delete;
-		TFDesignerWindow &operator =(const TFDesignerWindow &) = delete;
-
 		Ui::TFDesignerWindow *m_ui;
 
 		QLabel *m_lblStatus;

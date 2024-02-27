@@ -34,12 +34,6 @@ private:
 	virtual ~TFMemManager();
 
     TransferFunction m_swapBuffer;
-
-
-
-private:
-	TFMemManager(const TFMemManager&) = delete;
-	void operator=(const TFMemManager&) = delete;
 };
 
 

@@ -60,10 +60,6 @@ class RenderingWindow : public QMainWindow{
 
 
     private:
-        RenderingWindow(const RenderingWindow &) = delete;
-
-        RenderingWindow &operator =(const RenderingWindow &) = delete;
-
         QLabel *m_labelInfo;
         Ui::RenderingWindow *m_ui;
 
