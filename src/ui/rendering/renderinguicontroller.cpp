@@ -109,9 +109,13 @@ void RenderingUIController::slotExecScreenshotDialog() {
 
 
 void RenderingUIController::slotExportScreenshot(QString path) {
+    bool hqEnabled = RenderingSettings::instance().HQEnabled();
+
+    RenderingSettings::instance().setHQEnabled(true);
     slotUpdate();
     cudaDeviceSynchronize();
     m_window.renderingWidget()->grabFramebuffer().save(path);
+    RenderingSettings::instance().setHQEnabled(hqEnabled);
 }
 
 
