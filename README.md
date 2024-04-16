@@ -62,3 +62,7 @@ All OpenGL dependencies can be installed using the following commands (for UBUNT
 sudo apt install freeglut3-dev
 ```
 
+## Demonstration of usage
+- [Video of volume exploration in the system](https://www.youtube.com/watch?v=1a2rTCxJ_1A)
+
+
